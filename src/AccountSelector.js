@@ -46,16 +46,36 @@ function Main (props) {
       attached='top'
       tabular
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: '#6e3bb2',
         borderColor: '#fff',
         paddingTop: '1em',
-        paddingBottom: '1em'
+        paddingBottom: '1em',
+        marginBottom: '1em'
       }}
     >
       <Container>
         <Menu.Menu>
           <Image src={`${process.env.PUBLIC_URL}/assets/scifanchain_logo_small.png`} size='mini' />
         </Menu.Menu>
+        <Menu>
+          <Menu.Item
+            name='editorials'
+          >
+            Editorials
+          </Menu.Item>
+
+          <Menu.Item
+            name='reviews'
+          >
+            Reviews
+          </Menu.Item>
+
+          <Menu.Item
+            name='upcomingEvents'
+          >
+            Upcoming Events
+          </Menu.Item>
+        </Menu>
         <Menu.Menu position='right' style={{ alignItems: 'center' }}>
           { !accountSelected
             ? <span>

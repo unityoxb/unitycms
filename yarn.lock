@@ -14692,6 +14692,43 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"scifanchain@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "scifanchain@workspace:."
+  dependencies:
+    "@babel/core": ^7.14.3
+    "@polkadot/api": ^4.8.1
+    "@polkadot/extension-dapp": ^0.38.1
+    "@polkadot/keyring": ^6.3.1
+    "@polkadot/networks": ^6.3.1
+    "@polkadot/types": ^4.8.1
+    "@polkadot/ui-keyring": ^0.75.1
+    "@polkadot/ui-settings": ^0.75.1
+    "@polkadot/util": ^6.3.1
+    "@polkadot/util-crypto": ^6.3.1
+    babel-preset-env: ^1.7.0
+    eslint: ^7.20.0
+    eslint-config-semistandard: ^15.0.1
+    eslint-config-standard: ^16.0.2
+    eslint-plugin-import: ^2.22.1
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-only-warn: ^1.0.2
+    eslint-plugin-promise: ^4.3.1
+    eslint-plugin-standard: ^5.0.0
+    gh-pages: ^3.1.0
+    prop-types: ^15.7.2
+    query-string: ^6.13.5
+    react: ^16.14.0
+    react-app-rewired: ^2.1.8
+    react-copy-to-clipboard: ^5.0.3
+    react-dom: ^16.14.0
+    react-scripts: ^4.0.3
+    semantic-ui-css: ^2.4.1
+    semantic-ui-react: ^2.0.3
+    semistandard: ^16.0.0
+  languageName: unknown
+  linkType: soft
+
 "scryptsy@npm:^2.1.0":
   version: 2.1.0
   resolution: "scryptsy@npm:2.1.0"
@@ -15703,43 +15740,6 @@ resolve@^2.0.0-next.3:
   checksum: 1345ad348db3c98f7d0423762e13e816a8c1ba0b1d90d79f3528513be429f1cf68b7fa9c9d379870208586e7ff4cfb68b4121bbd904df03b17e84d62efcff288
   languageName: node
   linkType: hard
-
-"substrate-front-end-template@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "substrate-front-end-template@workspace:."
-  dependencies:
-    "@babel/core": ^7.14.3
-    "@polkadot/api": ^4.8.1
-    "@polkadot/extension-dapp": ^0.38.1
-    "@polkadot/keyring": ^6.3.1
-    "@polkadot/networks": ^6.3.1
-    "@polkadot/types": ^4.8.1
-    "@polkadot/ui-keyring": ^0.75.1
-    "@polkadot/ui-settings": ^0.75.1
-    "@polkadot/util": ^6.3.1
-    "@polkadot/util-crypto": ^6.3.1
-    babel-preset-env: ^1.7.0
-    eslint: ^7.20.0
-    eslint-config-semistandard: ^15.0.1
-    eslint-config-standard: ^16.0.2
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-only-warn: ^1.0.2
-    eslint-plugin-promise: ^4.3.1
-    eslint-plugin-standard: ^5.0.0
-    gh-pages: ^3.1.0
-    prop-types: ^15.7.2
-    query-string: ^6.13.5
-    react: ^16.14.0
-    react-app-rewired: ^2.1.8
-    react-copy-to-clipboard: ^5.0.3
-    react-dom: ^16.14.0
-    react-scripts: ^4.0.3
-    semantic-ui-css: ^2.4.1
-    semantic-ui-react: ^2.0.3
-    semistandard: ^16.0.0
-  languageName: unknown
-  linkType: soft
 
 "supports-color@npm:^2.0.0":
   version: 2.0.0

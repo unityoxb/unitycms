@@ -15,6 +15,7 @@ import NodeInfo from './NodeInfo';
 import TemplateModule from './TemplateModule';
 import Transfer from './Transfer';
 import Upgrade from './Upgrade';
+import MenuTop from './Nav';
 
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -51,9 +52,10 @@ function Main () {
   return (
     <div ref={contextRef}>
       <Sticky context={contextRef}>
-        <AccountSelector setAccountAddress={setAccountAddress} />
+        {/* <AccountSelector setAccountAddress={setAccountAddress} /> */}
+        <MenuTop />
       </Sticky>
-      <Container>
+      <Container fluid>
         <Grid stackable columns='equal'>
           <Grid.Row stretched>
             <NodeInfo />
