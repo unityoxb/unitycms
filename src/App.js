@@ -17,6 +17,7 @@ import Transfer from './Transfer';
 import Upgrade from './Upgrade';
 import MenuTop from './Nav';
 
+
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
@@ -41,7 +42,7 @@ function Main () {
     </Grid>;
 
   if (apiState === 'ERROR') return message(apiError);
-  else if (apiState !== 'READY') return loader('Connecting to Substrate');
+  else if (apiState !== 'READY') return loader('正在连接赛凡链……');
 
   if (keyringState !== 'READY') {
     return loader('Loading accounts (please review any extension\'s authorization)');
