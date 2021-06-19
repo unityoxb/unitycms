@@ -94,5 +94,5 @@
       "\\.(css|less)$": "<rootDir>/src/__tests__/mock.js"
     }
   },
-  "proxy": "http://118.195.181.77:8000"
+  "proxy": "http://scifanchain.com"
 }
