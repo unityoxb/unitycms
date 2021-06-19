@@ -36,7 +36,7 @@ function PostList () {
     //         2) 不再加载也没有错误
     //         3）不再加载但有错误
     return (
-        <>
+        <div>
             {loading && <div className="text-center">
                 <div className="spinner-border text-secondary" role="status">
                     <span className="sr-only">正在加载...</span>
@@ -108,7 +108,7 @@ function PostList () {
                     {error}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

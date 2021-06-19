@@ -15,7 +15,7 @@ import NodeInfo from './NodeInfo';
 import TemplateModule from './TemplateModule';
 import Transfer from './Transfer';
 import Upgrade from './Upgrade';
-import MenuTop from './Nav';
+import MenuTop from './Nav2';
 
 
 function Main () {
