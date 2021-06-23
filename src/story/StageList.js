@@ -8,7 +8,7 @@ function StageList () {
     const [error, setError] = useState('')
 
     useEffect(() => {
-        axios.get('/api/v1/stories/')
+        axios.get('https:api.scifanchain.com/stages/')
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
@@ -26,7 +26,7 @@ function StageList () {
     }, [])
 
     const postList = posts.map((post) => (
-        <List.Item key={post.id} as='a'>{post.title}</List.Item>
+        <List.Item key={stage.id} as='a'>{stage.title}</List.Item>
     ));
 
     return(

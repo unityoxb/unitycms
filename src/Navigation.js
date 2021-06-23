@@ -24,7 +24,7 @@ export default class Navigation extends Component {
                     content="首页"
                     onClick={this.handleItemClick}>
                 </Menu.Item>
-                <Menu.Item as={Link} to='/glaxy'
+                <Menu.Item as={Link} to='/galaxy'
                     name='银河书'
                     active={activeItem === '银河书'}
                     onClick={this.handleItemClick}>
