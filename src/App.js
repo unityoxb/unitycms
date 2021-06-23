@@ -2,14 +2,14 @@ import {
     BrowserRouter as Router,
 } from 'react-router-dom'
 
-import Navigation from './Navigation';
+import Nav from './Nav';
 import Content from './Content';
 
 
 export default function App() {
     return (
         <Router>
-            <Navigation />
+            <Nav />
             <Content />
         </Router>
     );
