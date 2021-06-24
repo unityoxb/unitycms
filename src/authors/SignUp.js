@@ -14,13 +14,11 @@ class SignUp extends Component {
         const { username, password, nickname, email } = this.state
 
         const authorInfo = {
-            "username": "oooodsdldyddoxb",
-            "nickname": "rally",
-            "email": "22dffd00dfdf89898fsddd2@qq.com",
-            "password": "oxb123"
+            username: username,
+            nickname: nickname,
+            email: email,
+            password: password
         }
-
-        alert(authorInfo.username)
 
         axios({
             // Oauth2要求必须以表单形式提交
@@ -32,13 +30,7 @@ class SignUp extends Component {
                 'accept': 'application/json',
             },
             method: 'POST',
-            url: 'https://api.scifanchain.com/authors/create_author/',
-            // auth: {
-            //     username: username,
-            //     nickname: nickname,
-            //     email: email,
-            //     password: password
-            // },
+            url: 'https://api.scifanchain.com/create_author/',
             // data: qs.stringify(authorInfo)
             data: authorInfo
         }).then(response => {

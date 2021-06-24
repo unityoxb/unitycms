@@ -53,21 +53,27 @@ export default class Nav extends Component {
                         onClick={this.handleItemClick}>
                     </Menu.Item>
                     <Menu.Menu position='right'>
-                        <Menu.Item as={Link} to='/sign-in'
-                            name='登录'
-                            active={activeItem === '登录'}
-                            onClick={this.handleItemClick}>
-                        </Menu.Item>
-                        <Menu.Item as={Link} to='/sign-up'
-                            name='注册'
-                            active={activeItem === '注册'}
-                            onClick={this.handleItemClick}>
-                        </Menu.Item>
+                        {storage.scifanchain_username &&
                         <Menu.Item
                             name={storage.scifanchain_username}
                             active={activeItem === 'logout'}
                             onClick={this.handleItemClick}>
                         </Menu.Item>
+                        }
+                        {!storage.scifanchain_username &&
+                            <Menu.Item as={Link} to='/sign-in'
+                                name='登录'
+                                active={activeItem === '登录'}
+                                onClick={this.handleItemClick}>
+                            </Menu.Item>
+                            }
+                        {!storage.scifanchain_username &&
+                        <Menu.Item as={Link} to='/sign-up'
+                            name='注册'
+                            active={activeItem === '注册'}
+                            onClick={this.handleItemClick}>
+                        </Menu.Item>
+                        }
                     </Menu.Menu>
                 </Menu>
         )
