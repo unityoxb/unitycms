@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createRef } from 'react';
-import { Grid, List, Form, Input, Select, options, Radio, Button, TextArea, Checkbox, Header } from 'semantic-ui-react';
+import { Link } from 'react-router-dom'
+import { Grid, List, Input, Select, options, Radio, Button, TextArea, Checkbox, Header } from 'semantic-ui-react';
 import axios from 'axios';
 import StageForm from './story/StageForm'
 
@@ -38,7 +39,14 @@ function Create() {
     }, [])
 
     const stageList = stages.map((stage) => (
-        <List.Item key={stage.id} as='a'>{stage.title}</List.Item>
+        <List.Item key={stage.id} as={Link} to={
+            {
+                pathname: '/stage',
+                state: { stageId:stage.id}
+            }
+        }>
+            {stage.title}
+        </List.Item>
     ));
 
     return (

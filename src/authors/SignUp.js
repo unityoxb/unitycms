@@ -20,27 +20,30 @@ class SignUp extends Component {
             password: password
         }
 
+        const storage = window.localStorage;
+
         axios({
             // Oauth2要求必须以表单形式提交
-            // headers: {
-            //     'Content-Type': 'application/x-www-form-urlencoded'
-            // },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             headers: {
                 'Content-Type': 'application/json',
-                'accept': 'application/json',
             },
             method: 'POST',
-            url: 'https://api.scifanchain.com/create_author/',
+            url: 'https://api.scifanchain.com/authors/create_author/',
             // data: qs.stringify(authorInfo)
             data: authorInfo
         }).then(response => {
-            console.log(response)
-            // const access_token = response.data.access_token;
-            // axios.defaults.headers.common["Authorization"] = access_token;
-            // storage.scifanchain_username = username
-            // storage.scifanchain_access_token = access_token
-            // console.log(response.data.access_token)
-            // console.log(response.data.token_type)
+            this.setState({ username: username })
+            // console.log(response)
+            const access_token = response.data.access_token;
+            axios.defaults.headers.common["Authorization"] = access_token;
+            storage.scifanchain_username = username
+            storage.scifanchain_access_token = access_token
+            console.log(response.data.access_token)
+            console.log(response.data.token_type)
+            console.log(response.data.exp)
             // console.log(response.data.refresh_token)
         }).catch(err => {
             console.log(err)
@@ -57,7 +60,7 @@ class SignUp extends Component {
                         <Grid.Column width={5}>
                         </Grid.Column>
                         <Grid.Column width={6}>
-                            <Header as='h2'>加入赛凡链，创造宇宙的故事</Header>
+                            <Header as='h2'>加入赛凡链，开启你的宇宙叙事</Header>
                             <p>
                                 银河星旋的人类文明高度发达，数百万计的文明星球在璀璨银河生生不息，体现着创造主的荣耀。人类不断探寻宇宙的奥秘，一个又一个里程碑式的重大发现被揭示出来。
                             </p>

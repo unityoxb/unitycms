@@ -28,13 +28,15 @@ class FormExampleCaptureValues extends Component {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             method: 'post',
-            url: 'https://api.scifanchain.com/token/',
+            url: 'https://api.scifanchain.com/authors/token/',
             auth: {
                 username: username,
                 password: password
             },
             data: qs.stringify(loginInfo)
         }).then(response => {
+            this.setState({username: username})
+            alert(username)
             // console.log(response)
             const access_token = response.data.access_token;
             axios.defaults.headers.common["Authorization"] = access_token;
@@ -49,7 +51,7 @@ class FormExampleCaptureValues extends Component {
     }
 
     render() {
-        const { username, password, submittedName, submittedEmail } = this.state
+        const { username, password } = this.state
 
         return (
             <Container>
