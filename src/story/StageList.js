@@ -4,28 +4,30 @@ import {List } from 'semantic-ui-react'
 
 function StageList () {
     const [loading, setLoading] = useState(true);
-    const [posts, setPosts] = useState([])
+    const [stages, setStages] = useState([])
     const [error, setError] = useState('')
 
     useEffect(() => {
+        let token = window.localStorage.getItem("scifanchain_access_token")
+        axios.defaults.headers.common["Authorization"] = "Bearer "+ token;
         axios.get('https:api.scifanchain.com/stages/')
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
-                setPosts(response.data.results)
+                setStages(response.data)
                 setError('')
                 console.log(response);
             })
             .catch(function (error) {
                 // 处理错误情况
                 setLoading(false)
-                setPosts([])
+                setStages([])
                 setError('很抱歉，没有获取到数据！')
                 console.log(error);
             });
     }, [])
 
-    const postList = posts.map((post) => (
+    const stageList = stages.map((stage) => (
         <List.Item key={stage.id} as='a'>{stage.title}</List.Item>
     ));
 
@@ -40,7 +42,7 @@ function StageList () {
             }
 
             {!loading && !error && 
-                <List>{postList}</List>
+                <List>{stageList}</List>
             }
         </div>
     )
