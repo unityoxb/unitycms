@@ -46,7 +46,7 @@ function Main (props) {
       attached='top'
       tabular
       style={{
-        backgroundColor: '#6e3bb2',
+        backgroundColor: '#fff',
         borderColor: '#fff',
         paddingTop: '1em',
         paddingBottom: '1em',
@@ -54,9 +54,6 @@ function Main (props) {
       }}
     >
       <Container>
-        <Menu.Menu>
-          <Image src={`${process.env.PUBLIC_URL}/assets/scifanchain_logo_small.png`} size='mini' />
-        </Menu.Menu>
         <Menu>
           <Menu.Item
             name='editorials'

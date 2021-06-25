@@ -53,9 +53,8 @@ function Main () {
     <div ref={contextRef}>
       <Sticky context={contextRef}>
         <AccountSelector setAccountAddress={setAccountAddress} />
-        <MenuTop />
       </Sticky>
-      <Container fluid>
+      <Container>
         <Grid stackable columns='equal'>
           <Grid.Row stretched>
             <NodeInfo />

@@ -12,8 +12,6 @@ import axios from 'axios'
 import qs from 'qs'
 
 
-
-
 class FormExampleFieldControl extends Component {
     state = {title:'', 'content':''}
 
@@ -26,6 +24,7 @@ class FormExampleFieldControl extends Component {
         const submitData = {
             title: title,
             content: content,
+            grant_type: 'password'
         }
 
         let token = window.localStorage.getItem("scifanchain_access_token")
@@ -36,8 +35,11 @@ class FormExampleFieldControl extends Component {
             // headers: {
             //     'Content-Type': 'application/x-www-form-urlencoded'
             // },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'post',
-            url: 'https://api.scifanchain.com/stages/create_stage',
+            url: 'http://118.195.181.77:7000/stages/create_stage',
             data: submitData
         }).then(response => {
             console.log(response)

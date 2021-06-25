@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {List } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 function StageList () {
     const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ function StageList () {
     useEffect(() => {
         let token = window.localStorage.getItem("scifanchain_access_token")
         axios.defaults.headers.common["Authorization"] = "Bearer "+ token;
-        axios.get('https:api.scifanchain.com/stages/')
+        axios.get('http://118.195.181.77:7000/stages/')
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
@@ -28,9 +29,14 @@ function StageList () {
     }, [])
 
     const stageList = stages.map((stage) => (
-        <List.Item key={stage.id} as='a'>{stage.title}</List.Item>
+        <List.Item key={stage.id} as={Link} to={
+            {
+                pathname: '/stage/' + stage.id,
+            }
+        }>
+            {stage.title}
+        </List.Item>
     ));
-
     return(
         <div>
             { loading &&　

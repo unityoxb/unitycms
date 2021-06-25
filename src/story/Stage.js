@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Container, Header } from 'semantic-ui-react'
 
-function Stage() {
+function Stage(props) {
 
     const [loading, setLoading] = useState(true);
     const [stage, setStage] = useState([])
     const [error, setError] = useState('')
 
+
     useEffect(() => {
         let token = window.localStorage.getItem("scifanchain_access_token")
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get('https:api.scifanchain.com/stages/1')
+        axios.get('http://118.195.181.77:7000/stages/1')
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
