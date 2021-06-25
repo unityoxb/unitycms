@@ -19,26 +19,26 @@ class FormExampleFieldControl extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const { title, content } = this.state
+        const { title } = this.state
 
         const submitData = {
             title: title,
             // grant_type: 'password'
         }
 
-        // let token = window.localStorage.getItem("scifanchain_access_token")
-        // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+        let token = window.localStorage.getItem("scifanchain_access_token")
+        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
         axios({
             // Oauth2要求必须以表单形式提交
             // headers: {
             //     'Content-Type': 'application/x-www-form-urlencoded'
             // },
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'post',
-            url: 'https://api.scifanchain.com/stages/test',
+            url: 'https://api.scifanchain.com/stages/test/',
             data: submitData
         }).then(response => {
             console.log(response)
@@ -49,7 +49,7 @@ class FormExampleFieldControl extends Component {
     }
 
     render() {
-        const { title, content } = this.state
+        const { title } = this.state
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Form.Group widths='equal'>
