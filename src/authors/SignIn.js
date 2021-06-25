@@ -28,7 +28,7 @@ class FormExampleCaptureValues extends Component {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             method: 'post',
-            url: 'http://118.195.181.77:7000/authors/token/',
+            url: 'https://api.scifanchain.com/authors/token/',
             auth: {
                 username: username,
                 password: password

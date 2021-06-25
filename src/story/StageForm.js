@@ -39,7 +39,7 @@ class FormExampleFieldControl extends Component {
                 'Content-Type': 'application/json',
             },
             method: 'post',
-            url: 'https://api.scifanchain.com/stages/create_stage',
+            url: 'https://api.scifanchain.com/stages/create_stage/',
             data: submitData
         }).then(response => {
             console.log(response)

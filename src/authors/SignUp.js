@@ -31,7 +31,7 @@ class SignUp extends Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: 'http://118.195.181.77:7000/authors/create_author/',
+            url: 'https://api.scifanchain.com/authors/create_author/',
             // data: qs.stringify(authorInfo)
             data: authorInfo
         }).then(response => {
