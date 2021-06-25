@@ -12,7 +12,7 @@ export default function App() {
         <Router>
             <Navigation />
             <Content />
-            <Test />
+            {/* <Test /> */}
         </Router>
     );
 }
