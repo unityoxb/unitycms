@@ -24,7 +24,7 @@ class FormExampleFieldControl extends Component {
         const submitData = {
             title: title,
             content: content,
-            grant_type: 'password'
+            // grant_type: 'password'
         }
 
         let token = window.localStorage.getItem("scifanchain_access_token")
@@ -39,7 +39,7 @@ class FormExampleFieldControl extends Component {
                 'Content-Type': 'application/json',
             },
             method: 'post',
-            url: 'http://118.195.181.77:7000/stages/create_stage',
+            url: 'https://api.scifanchain.com/stages/create_stage/',
             data: submitData
         }).then(response => {
             console.log(response)

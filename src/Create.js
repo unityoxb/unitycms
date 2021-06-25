@@ -20,9 +20,9 @@ function Create() {
 
         axios({
             // Oauth2要求必须以表单形式提交
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            // headers: {
+            //     'Content-Type': 'application/x-www-form-urlencoded'
+            // },
             method: 'get',
             url: 'https://api.scifanchain.com/authors/me/',
         }).then(response => {
