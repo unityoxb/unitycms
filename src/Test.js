@@ -13,7 +13,7 @@ import qs from 'qs'
 
 
 class FormExampleFieldControl extends Component {
-    state = {title:'', 'content':''}
+    state = { title: ''}
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
@@ -23,23 +23,22 @@ class FormExampleFieldControl extends Component {
 
         const submitData = {
             title: title,
-            content: content,
             // grant_type: 'password'
         }
 
-        let token = window.localStorage.getItem("scifanchain_access_token")
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+        // let token = window.localStorage.getItem("scifanchain_access_token")
+        // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
         axios({
             // Oauth2要求必须以表单形式提交
             // headers: {
             //     'Content-Type': 'application/x-www-form-urlencoded'
             // },
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            // headers: {
+            //     'Content-Type': 'application/json',
+            // },
             method: 'post',
-            url: 'https://api.scifanchain.com/stages/create_stage',
+            url: 'https://api.scifanchain.com/stages/test',
             data: submitData
         }).then(response => {
             console.log(response)
@@ -62,14 +61,7 @@ class FormExampleFieldControl extends Component {
                         onChange={this.handleChange}
                     />
                 </Form.Group>
-                
-                <Form.Field
-                    control={TextArea}
-                    label='内容'
-                    name='content'
-                    placeholder='把它写下来吧，让它生长...'
-                    onChange={this.handleChange}
-                />
+
                 <Form.Field control={Button}>Submit</Form.Field>
             </Form>
         )

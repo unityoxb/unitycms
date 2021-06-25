@@ -4,6 +4,7 @@ import {
 
 import Navigation from './Navigation';
 import Content from './Content';
+import Test from './Test';
 
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         <Router>
             <Navigation />
             <Content />
+            <Test />
         </Router>
     );
 }

@@ -4,31 +4,37 @@ import axios from 'axios'
 
 const contextRef = createRef();
 
-function Galaxy() {
+function Works() {
 
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        let token = window.localStorage.getItem("scifanchain_access_token")
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get('https:api.scifanchain.com/authors/me')
-            .then(function (response) {
-                // 处理成功情况
-                setLoading(false)
-                console.log(response);
-            })
-            .catch(function (error) {
-                // 处理错误情况
-                setLoading(false)
-                console.log(error);
-            });
-    }, [])
+    // fetch('https://api.scifanchain.com/stages/', {
+    //     method: 'GET',
+    //     mode: 'cors',
+    // }).then(res => {
+    //     return res.json();
+    // }).then(json => {
+    //     console.log('获取的结果', json);
+    //     return json;
+    // }).catch(err => {
+    //     console.log('请求错误', err);
+    // })
+
+    fetch('https://api.scifanchain.com/stages/test', {
+        method: 'POST',
+        // headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json'
+        // },
+        body: JSON.stringify({
+            title: 'hi,unity'
+        })
+    });
 
     return (
         <div ref={contextRef}>
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={8}>
-                        <span>galaxy</span>
+                        <span>作品</span>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -37,4 +43,4 @@ function Galaxy() {
     )
 }
 
-export default Galaxy
+export default Works

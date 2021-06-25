@@ -12,7 +12,7 @@ function Stage(props) {
     useEffect(() => {
         let token = window.localStorage.getItem("scifanchain_access_token")
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get('http://118.195.181.77:7000/stages/1')
+        axios.get('https://api.scifanchain.com/stages/1')
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
