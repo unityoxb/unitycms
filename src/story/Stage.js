@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Container, Header } from 'semantic-ui-react'
+import { Container, Header, Button } from 'semantic-ui-react'
+import { useLocation } from 'react-router-dom'
 
 function Stage(props) {
 
@@ -8,11 +9,12 @@ function Stage(props) {
     const [stage, setStage] = useState([])
     const [error, setError] = useState('')
 
+    const location = useLocation();
 
     useEffect(() => {
         let token = window.localStorage.getItem("scifanchain_access_token")
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get('https://api.scifanchain.com/stages/1')
+        axios.get('https://api.scifanchain.com/stages/' + location.stage_id)
             .then(function (response) {
                 // 处理成功情况
                 setLoading(false)
@@ -41,10 +43,22 @@ function Stage(props) {
 
             {!loading && !error &&
                 <Container>
+                
                     <Header>{stage.title}</Header>
                     <p>{stage.content}</p>
+
+                    <Button color='violet'>存证</Button>
+
+                    <Button.Group basic size='small' floated='right'>
+                        <Button icon='file' />
+                        <Button icon='save' />
+                        <Button icon='upload' />
+                        <Button icon='download' />
+                    </Button.Group>
+
                 </Container>
            }
+
         </div>
     )
 }

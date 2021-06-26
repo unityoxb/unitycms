@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import {Link} from 'react-router-dom'
 
 export default class Nav extends Component {
+
     
     state = { activeItem: 'home'}
     state = { username: window.localStorage.scifanchain_username}
@@ -19,7 +20,7 @@ export default class Nav extends Component {
         const { activeItem, username } = this.state
 
         return (
-            <Menu pointing>
+            <Menu pointing violet >
                 {/* <Image src={`${process.env.PUBLIC_URL}/assets/scifanchain_logo_black_white.png`} size='mini' /> */}
                 <Menu.Item header>赛凡链</Menu.Item>
                 <Menu.Item as={Link} to='/'
@@ -28,29 +29,29 @@ export default class Nav extends Component {
                     content="首页"
                     onClick={this.handleItemClick}>
                 </Menu.Item>
-                <Menu.Item as={Link} to='/work'
-                    name='作品'
-                    active={activeItem === '作品'}
+                <Menu.Item as={Link} to='/galaxy'
+                    name='银河书'
+                    active={activeItem === '银河书'}
                     onClick={this.handleItemClick}>
                 </Menu.Item>
-                <Menu.Item as={Link} to='/about'
+                {/* <Menu.Item as={Link} to='/about'
                     name='纪元'
                     active={activeItem === '纪元'}
                     onClick={this.handleItemClick}>
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item as={Link} to='/create'
-                    name='创作中心'
-                    active={activeItem === '创作中心'}
+                    name='创作营地'
+                    active={activeItem === '创作营地'}
                     onClick={this.handleItemClick}>
                 </Menu.Item>
-                <Menu.Item as={Link} to='/community'
+                {/* <Menu.Item as={Link} to='/community'
                     name='社区治理'
                     active={activeItem === '社区治理'}
                     onClick={this.handleItemClick}>
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item as={Link} to='/finance'
-                    name='财政'
-                    active={activeItem === '财政'}
+                    name='链上信息'
+                    active={activeItem === '链上信息'}
                     onClick={this.handleItemClick}>
                 </Menu.Item>
                 <Menu.Menu position='right'>
