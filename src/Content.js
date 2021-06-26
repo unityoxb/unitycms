@@ -5,13 +5,14 @@ import {
 } from 'react-router-dom'
 
 import About from './About';
-import Create from './Create';
+import Site from './Site';
 import Home from './Home';
 import Galaxy from "./Galaxy";
 import SignIn from "./authors/SignIn";
 import SignUp from "./authors/SignUp";
 import Stage from "./story/Stage";
-import Finance from "./Finance"
+import Finance from "./Finance";
+import Space from "./Space";
 // import 404 from './404'
 
 
@@ -21,8 +22,9 @@ export default function Content() {
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/finance" component={Finance} />
-            <Route path="/create" component={Create} />
+            <Route path="/site" component={Site} />
             <Route path="/galaxy" component={Galaxy} />
+            <Route path="/space" component={Space} />
             <Route path="/stage/:id" component={Stage} />
             <Route path="/" component={Home} />
         </Switch>

@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext } from 'react'
 import { Menu } from 'semantic-ui-react'
-import { AuthorContext } from '../Create';
+import { AuthorContext } from '../Space';
 
 
 function Info () {

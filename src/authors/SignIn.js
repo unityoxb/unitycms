@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import React, { Component, useState } from 'react'
 import {Container, Grid, Form, Header } from 'semantic-ui-react'
 import axios from 'axios'
@@ -6,6 +7,8 @@ import { useRecoilState } from 'recoil';
 import { usernameState} from '../StateManager'
 
 function SignIn () {
+
+  const history = useHistory(); 
 
   const [state, setState] = useState({
     username: "",
@@ -60,6 +63,8 @@ function SignIn () {
       
       console.log(response.data.access_token)
       console.log(response.data.token_type)
+
+      history.push('/space');
 
       
       // console.log(response.data.refresh_token)

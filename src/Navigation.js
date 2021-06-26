@@ -7,24 +7,25 @@ import { usernameState} from './StateManager'
 
 
 function Navigation () {
-  const [activeItem, setActiveItem] = useState('home')
 
+  // 导航图标激活样式
+  const [activeItem, setActiveItem] = useState('home')
   const handleItemClick = (e, { name }) => {
     setActiveItem(name)
   }
   
+  // 同步用户状态
   const [username, setUsername] = useRecoilState(usernameState)
-  
+
+  // 用户注销
   const handleLogout = () => { 
     window.localStorage.removeItem('scifanchain_username');
     window.localStorage.removeItem('scifanchain_access_token');
     setUsername('')
   }
 
-  
-
   return (
-    <Menu pointing violet >
+    <Menu pointing >
       {/* <Image src={`${process.env.PUBLIC_URL}/assets/scifanchain_logo_black_white.png`} size='mini' /> */}
       <Menu.Item header>赛凡链</Menu.Item>
       <Menu.Item as={Link} to='/'
@@ -43,9 +44,14 @@ function Navigation () {
         active={activeItem === '纪元'}
         onClick={handleItemClick}>
       </Menu.Item> */}
+      <Menu.Item as={Link} to='/site'
+        name='协作星站'
+        active={activeItem === '协作星站'}
+        onClick={handleItemClick}>
+      </Menu.Item>
       <Menu.Item as={Link} to='/create'
-        name='创作营地'
-        active={activeItem === '创作营地'}
+        name='远征联盟'
+        active={activeItem === '远征联盟'}
         onClick={handleItemClick}>
       </Menu.Item>
       {/* <Menu.Item as={Link} to='/community'
@@ -62,11 +68,9 @@ function Navigation () {
         {username &&
           <Dropdown text={username} pointing className='link item'>
             <Dropdown.Menu>
-              <Dropdown.Header>创作中心</Dropdown.Header>
-              <Dropdown.Item>工作室</Dropdown.Item>
+              <Dropdown.Item as={Link} to='/space'>我的空间</Dropdown.Item>
               <Dropdown.Item>合作者</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Header>账户</Dropdown.Header>
               <Dropdown.Item>设置</Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>
                   退出
