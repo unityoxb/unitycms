@@ -9,7 +9,6 @@ import {
     TextArea,
 } from 'semantic-ui-react'
 import axios from 'axios'
-import qs from 'qs'
 
 
 class FormExampleFieldControl extends Component {
