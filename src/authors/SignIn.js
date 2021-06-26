@@ -3,7 +3,7 @@ import {Container, Grid, Form, Header } from 'semantic-ui-react'
 import axios from 'axios'
 import qs from 'qs'
 import { useRecoilState } from 'recoil';
-import { userState} from '../StateManager'
+import { usernameState} from '../StateManager'
 
 function SignIn () {
 
@@ -18,6 +18,11 @@ function SignIn () {
       [evt.target.name]: evt.target.value,
     });
   }
+
+
+  // 渲染与用户登录相关组件
+  const [username, setUsername] = useRecoilState(usernameState)
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +49,8 @@ function SignIn () {
       },
       data: qs.stringify(loginInfo)
     }).then(response => {
+      setUsername(state.username)
+
       // console.log(response)
       const access_token = response.data.access_token;
       axios.defaults.headers.common["Authorization"] = access_token;
@@ -53,6 +60,8 @@ function SignIn () {
       
       console.log(response.data.access_token)
       console.log(response.data.token_type)
+
+      
       // console.log(response.data.refresh_token)
     }).catch(err => {
       console.log(err)
