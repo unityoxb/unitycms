@@ -8532,6 +8532,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"hamt_plus@npm:1.0.2":
+  version: 1.0.2
+  resolution: "hamt_plus@npm:1.0.2"
+  checksum: b1b1d65d19546a513cd68ea8e9970b5e76c61549bd395ea7d8f809d439940738cc5a36eaa712668e69099a5fd62cfafb8c34079e392697f31eee04ab5b6d4094
+  languageName: node
+  linkType: hard
+
 "handle-thing@npm:^2.0.0":
   version: 2.0.1
   resolution: "handle-thing@npm:2.0.1"
@@ -13961,6 +13968,22 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"recoil@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "recoil@npm:0.3.1"
+  dependencies:
+    hamt_plus: 1.0.2
+  peerDependencies:
+    react: ">=16.13.1"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 6cc0ee6320f66e3e26bf119fd03c83455389e138ee53411c03290c6fdbcd2282248c00ab4308181983fb3258f30448e0254e52b4b04c54c7da3e697893c63596
+  languageName: node
+  linkType: hard
+
 "recursive-readdir@npm:2.2.2":
   version: 2.2.2
   resolution: "recursive-readdir@npm:2.2.2"
@@ -14658,6 +14681,7 @@ resolve@^2.0.0-next.3:
     react-dom: ^16.14.0
     react-router-dom: ^5.2.0
     react-scripts: ^4.0.3
+    recoil: ^0.3.1
     semantic-ui-css: ^2.4.1
     semantic-ui-react: ^2.0.3
     semistandard: ^16.0.0
