@@ -7,11 +7,14 @@ const contextRef = createRef();
 function Works() {
 
     return (
+        
         <div ref={contextRef}>
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={8}>
-                        <span>作品</span>
+                        <div>
+                            输入文本: 
+                        </div>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

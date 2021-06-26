@@ -1,11 +1,13 @@
-import React, { useEffect, useState, createRef } from 'react';
+import React, { useEffect, useState, createRef, createContext  } from 'react';
 import { Link } from 'react-router-dom'
 import { Grid, List, Input, Select, options, Radio, Button, TextArea, Checkbox, Header } from 'semantic-ui-react';
 import axios from 'axios';
 import StageForm from './story/StageForm'
+import Info from './authors/Info'
+
+export const AuthorContext = createContext();
 
 const contextRef = createRef();
-
 
 function Create() {
 
@@ -41,8 +43,8 @@ function Create() {
     const stageList = stages.map((stage) => (
         <List.Item key={stage.id} as={Link} to={
             {
-                pathname: '/stage',
-                state: { stageId:stage.id}
+                pathname: '/stage/' + stage.id,
+                stage_id: stage.id
             }
         }>
             {stage.title}
@@ -54,10 +56,9 @@ function Create() {
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        <Header>用户信息</Header>
-                        <p>{author.username}</p>
-                        <p>{author.nickname}</p>
-                        <p>{author.email}</p>
+                        <AuthorContext.Provider value={author}>
+                            <Info />
+                        </AuthorContext.Provider>
                     </Grid.Column>
                     <Grid.Column width={8}>
                         <StageForm></StageForm>

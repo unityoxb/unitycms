@@ -4,15 +4,20 @@ import {
 
 import Navigation from './Navigation';
 import Content from './Content';
-import Test from './Test';
+// import Test from './Test';
+// import Demo from './Demo'
+import {RecoilRoot} from 'recoil';
 
 
 export default function App() {
     return (
-        <Router>
-            <Navigation />
-            <Content />
-            {/* <Test /> */}
-        </Router>
+        <RecoilRoot>
+            <Router>
+                <Navigation />
+                <Content />
+                {/* <Test /> */}
+                {/* <Demo /> */}
+            </Router>
+        </RecoilRoot>
     );
 }

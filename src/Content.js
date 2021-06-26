@@ -7,7 +7,7 @@ import {
 import About from './About';
 import Create from './Create';
 import Home from './Home';
-import Works from "./Works";
+import Galaxy from "./Galaxy";
 import SignIn from "./authors/SignIn";
 import SignUp from "./authors/SignUp";
 import Stage from "./story/Stage";
@@ -20,10 +20,9 @@ export default function Content() {
         <Switch>
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />
-            <Route path="/about" component={About} />
             <Route path="/finance" component={Finance} />
             <Route path="/create" component={Create} />
-            <Route path="/work" component={Works} />
+            <Route path="/galaxy" component={Galaxy} />
             <Route path="/stage/:id" component={Stage} />
             <Route path="/" component={Home} />
         </Switch>
