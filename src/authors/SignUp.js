@@ -35,6 +35,14 @@ export default function SignUp () {
       ...state,
       [evt.target.name]: evt.target.value,
     });
+    if (evt.target.name === 'password_repeat' && evt.target.value === state.password){
+      setAllowPasswordRepeat(true)
+      submitCheck();
+    }
+    else{
+      setAllowPasswordRepeat(false)
+      submitCheck();
+    }
   }
 
   // 验证用户名
@@ -93,6 +101,9 @@ export default function SignUp () {
   function submitCheck () {
     if(allow_username && allow_email && allow_password && allow_password_repeat){
       setValidated(true)
+    }
+    else{
+      setValidated(false)
     }
   }
 
