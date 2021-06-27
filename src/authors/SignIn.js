@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { Component, useState } from 'react'
-import {Container, Grid, Form, Header } from 'semantic-ui-react'
+import {Container, Grid, Form, Header, Message, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 import qs from 'qs'
 import { useRecoilState } from 'recoil';
@@ -12,7 +12,8 @@ function SignIn () {
 
   const [state, setState] = useState({
     username: "",
-    password: ""
+    password: "",
+    dissplay_hidden: true,
   })
 
   function handleChange(evt) {
@@ -22,8 +23,7 @@ function SignIn () {
     });
   }
 
-
-  // 渲染与用户登录相关组件
+  // 用户登录相关组件
   const [username, setUsername] = useRecoilState(usernameState)
   
 
@@ -69,6 +69,7 @@ function SignIn () {
       
       // console.log(response.data.refresh_token)
     }).catch(err => {
+      setState({...state,dissplay_hidden:false})
       console.log(err)
     });
   }
@@ -81,12 +82,11 @@ function SignIn () {
           <Grid.Column width={5}>
           </Grid.Column>
           <Grid.Column width={6}>
-            <Header as='h2'>加入赛凡链，创造宇宙的故事</Header>
-            <p>
-              银河星旋的人类文明高度发达，数百万计的文明星球在璀璨银河生生不息，体现着创造主的荣耀。人类不断探寻宇宙的奥秘，一个又一个里程碑式的重大发现被揭示出来。
-            </p>
-
-            <Form onSubmit={handleSubmit}>
+            <Message
+              attached
+              header='赛凡链期待你的创造'
+            />
+            <Form onSubmit={handleSubmit} className='attached fluid segment'>
               <Form.Input
                 placeholder='用户名'
                 name='username'
@@ -102,6 +102,12 @@ function SignIn () {
               />
               <Form.Button content='提交' />
             </Form>
+            {!state.dissplay_hidden && 
+              <Message attached='bottom' warning>
+              <Icon name='help' />
+              密码似乎不正确...&nbsp;<a href='#'>找回密码</a>。&nbsp;
+              </Message>
+            }
           </Grid.Column>
           <Grid.Column width={5}>
           </Grid.Column>

@@ -39,19 +39,19 @@ function Navigation () {
         active={activeItem === '银河书'}
         onClick={handleItemClick}>
       </Menu.Item>
-      {/* <Menu.Item as={Link} to='/about'
-        name='纪元'
-        active={activeItem === '纪元'}
+      <Menu.Item as={Link} to='/era'
+        name='超级星球'
+        active={activeItem === '超级星球'}
         onClick={handleItemClick}>
-      </Menu.Item> */}
-      <Menu.Item as={Link} to='/site'
-        name='协作星站'
-        active={activeItem === '协作星站'}
+      </Menu.Item>
+      <Menu.Item as={Link} to='/era'
+        name='流年'
+        active={activeItem === '流年'}
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Item as={Link} to='/create'
-        name='远征联盟'
-        active={activeItem === '远征联盟'}
+        name='远征计划'
+        active={activeItem === '远征计划'}
         onClick={handleItemClick}>
       </Menu.Item>
       {/* <Menu.Item as={Link} to='/community'
@@ -60,8 +60,8 @@ function Navigation () {
         onClick={handleItemClick}>
       </Menu.Item> */}
       <Menu.Item as={Link} to='/finance'
-        name='链上信息'
-        active={activeItem === '链上信息'}
+        name='星块社区'
+        active={activeItem === '星块社区'}
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Menu position='right'>
@@ -69,9 +69,8 @@ function Navigation () {
           <Dropdown text={username} pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Item as={Link} to='/space'>我的空间</Dropdown.Item>
-              <Dropdown.Item>合作者</Dropdown.Item>
+              <Dropdown.Item as={Link} to='/profile'>账号设置</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item>设置</Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>
                   退出
               </Dropdown.Item>
