@@ -120,12 +120,12 @@ export default function SignUp () {
 
     axios({
         // Oauth2要求必须以表单形式提交
-        // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded'
-        // },
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
+        // headers: {
+        //     'Content-Type': 'application/json',
+        // },
         method: 'POST',
         url: 'https://api.scifanchain.com/authors/create_author/',
         // data: qs.stringify(authorInfo)
