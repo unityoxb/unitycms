@@ -41,12 +41,11 @@ export default function SignUp () {
     });
     if (evt.target.name === 'password_repeat' && evt.target.value === state.password){
       setAllowPasswordRepeat(true)
-      submitCheck();
     }
     else{
       setAllowPasswordRepeat(false)
-      submitCheck();
     }
+    submitCheck();
   }
 
   // 验证用户名
@@ -124,17 +123,20 @@ export default function SignUp () {
 
     axios({
       // Oauth2要求必须以表单形式提交
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-      },
       // headers: {
-      //     'Content-Type': 'application/json',
+      //     'Content-Type': 'application/x-www-form-urlencoded'
       // },
+      headers: {
+          'Content-Type': 'application/json',
+      },
       method: 'POST',
       url: 'https://api.scifanchain.com/authors/create_author/',
       // data: qs.stringify(authorInfo)
       data: authorInfo
     }).then(response => {
+
+      setUsername(state.username)
+      
       // console.log(response)
       const access_token = response.data.access_token;
       axios.defaults.headers.common["Authorization"] = access_token;

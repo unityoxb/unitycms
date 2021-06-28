@@ -52,6 +52,7 @@ function SignIn () {
       },
       data: qs.stringify(loginInfo)
     }).then(response => {
+      
       setUsername(state.username)
 
       // console.log(response)
@@ -66,7 +67,6 @@ function SignIn () {
 
       history.push('/space');
 
-      
       // console.log(response.data.refresh_token)
     }).catch(err => {
       setState({...state,dissplay_hidden:false})
