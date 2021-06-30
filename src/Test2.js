@@ -28,7 +28,6 @@ export default function Test2() {
     main()
     return (
         <Container>
-
             <Button onClick={poe}>hello ,world!</Button>
         </Container>
         

@@ -20,6 +20,7 @@ import Upgrade from './Upgrade';
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
+  
   const accountPair =
     accountAddress &&
     keyringState === 'READY' &&
@@ -52,7 +53,7 @@ function Main () {
   return (
     <div ref={contextRef}>
       <Sticky context={contextRef}>
-        <AccountSelector setAccountAddress={setAccountAddress} />
+        {/* <AccountSelector setAccountAddress={setAccountAddress} /> */}
       </Sticky>
       <Container>
         <Grid stackable columns='equal'>

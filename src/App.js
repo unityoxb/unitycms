@@ -9,6 +9,7 @@ import Test2 from './Test2';
 // import Demo from './Demo'
 import React from 'react';
 import {RecoilRoot} from 'recoil';
+import PoE from './PoE';
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <Router>
                 {<Navigation />}
                 {<Content />}
+                {/* {<PoE accountPair={accountPair}/>} */}
                 {/* <Test2 /> */}
                 {/* <Demo /> */}
             </Router>

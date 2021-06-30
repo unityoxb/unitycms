@@ -2,15 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Table, Grid, Button } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useSubstrate } from './substrate-lib';
+
+import { hdLedger, hdValidatePath, keyExtractSuri, mnemonicGenerate, mnemonicValidate, randomAsU8a } from '@polkadot/util-crypto';
+
 const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
 
 export default function Main (props) {
+
+
+  const mnemonic = mnemonicGenerate()
+
   const { api, keyring } = useSubstrate();
   const accounts = keyring.getPairs();
   const [balances, setBalances] = useState({});
   const ALICE = 'oxb';
   const keyring2 = new Keyring({ type: 'sr25519' });
   const alice = keyring2.addFromUri(ALICE);
+
+
+  console.log("hello:" + mnemonic)
+  console.log("he:"+ alice.address)
   
 
   useEffect(() => {
@@ -78,17 +89,6 @@ export default function Main (props) {
               }</Table.Cell>
             </Table.Row>
           )}
-          <Table.Row>
-            <Table.Cell width={3} textAlign='right'>
-              <strong>{}</strong>
-            </Table.Cell>
-            <Table.Cell width={10}>
-              <strong>Address</strong>
-            </Table.Cell>
-            <Table.Cell width={3}>
-              <strong>Balance</strong>
-            </Table.Cell>
-          </Table.Row>
         </Table.Body>
       </Table>
     </Grid.Column>

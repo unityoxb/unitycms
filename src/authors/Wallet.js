@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Grid, Button } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useSubstrate } from './substrate-lib';
+import { useSubstrate } from '../substrate-lib';
 
 import { hdLedger, hdValidatePath, keyExtractSuri, mnemonicGenerate, mnemonicValidate, randomAsU8a } from '@polkadot/util-crypto';
 
-const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
+const { Keyring } = require('@polkadot/api');
 
 export default function Main(props) {
 
-
-    const mnemonic = mnemonicGenerate()
-
     const { api, keyring } = useSubstrate();
     const [balances, setBalances] = useState({});
-    const ALICE = 'oxb';
+
+    const mnemonic = mnemonicGenerate()
     const keyring2 = new Keyring({ type: 'sr25519' });
     const alice = keyring2.addFromUri(mnemonic);
-
 
     useEffect(() => {
         const addresses = keyring.getPairs().map(account => account.address);
         let unsubscribeAll = null;
-
 
         api.query.system.account
             .multi(addresses, balances => {
@@ -46,30 +42,31 @@ export default function Main(props) {
 
     return (
         <Grid.Column>
-            <h1>Balances</h1>
+            <h1>钱包地址</h1>
             <Table celled striped size='small'>
                 <Table.Body>
                     <Table.Row>
-                        <Table.Cell width={3} textAlign='right'>
-                            <strong>Name</strong>
+                        <Table.Cell width={2} textAlign='right'>
+                            <strong>用户名</strong>
                         </Table.Cell>
                         <Table.Cell width={10}>
                             <strong>{mnemonic}</strong>
                         </Table.Cell>
-                        <Table.Cell width={3}>
-                            <strong>{alice.address}</strong>
-                        </Table.Cell>
                     </Table.Row>
-
                     <Table.Row>
-                        <Table.Cell width={3} textAlign='right'>
-                            <strong>{ }</strong>
+                        <Table.Cell width={2} textAlign='right'>
+                            <strong>助记词</strong>
                         </Table.Cell>
                         <Table.Cell width={10}>
-                            <strong>Address</strong>
+                            <strong>{mnemonic}</strong>
                         </Table.Cell>
-                        <Table.Cell width={3}>
-                            <strong>Balance</strong>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell width={2} textAlign='right'>
+                            <strong>地址</strong>
+                        </Table.Cell>
+                        <Table.Cell width={10}>
+                            <strong>{alice.address}</strong>
                         </Table.Cell>
                     </Table.Row>
                 </Table.Body>

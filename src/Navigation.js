@@ -69,6 +69,7 @@ function Navigation () {
           <Dropdown text={username} pointing className='link item'>
             <Dropdown.Menu>
               <Dropdown.Item as={Link} to='/space'>我的空间</Dropdown.Item>
+              <Dropdown.Item as={Link} to='/wallet'>我的钱包</Dropdown.Item>
               <Dropdown.Item as={Link} to='/profile'>账号设置</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout}>
