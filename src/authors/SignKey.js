@@ -5,6 +5,8 @@ import { Table, Grid, Header } from 'semantic-ui-react';
 
 import keyring from '@polkadot/ui-keyring';
 
+import axios from 'axios'
+
 
 function Main(){
 
@@ -15,6 +17,30 @@ function Main(){
     // const p = keyring.getPair(adderss)
 
     const [accountAddress, setAccountAddress] = useState(null);
+
+    const [loading, setLoading] = useState(true);
+    const [author, SetAuthor] = useState({})
+
+
+    useEffect(() => {
+        let token = window.localStorage.getItem("scifanchain_access_token")
+        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+        axios({
+            method: 'get',
+            url: 'https://api.scifanchain.com/authors/me/',
+        }).then(response => {
+            setLoading(false)            
+            SetAuthor(response.data)
+            
+            // console.log(response.data.refresh_token)
+            // console.log(response.data)
+        }).catch(err => {
+            setLoading(false)
+            setError('很抱歉，没有获取到数据！')
+            console.log(err)
+        });
+    }, [])
 
     useEffect(() => {
         async function getAccount(){
