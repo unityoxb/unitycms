@@ -3,7 +3,7 @@ import { Table, Grid, Button } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useSubstrate } from '../substrate-lib';
 
-import { hdLedger, hdValidatePath, keyExtractSuri, mnemonicGenerate, mnemonicValidate, randomAsU8a } from '@polkadot/util-crypto';
+import { hdLedger, hdValidatePath, keyExtractSuri, mnemonicGenerate, mnemonicValidate, randomAsU8a, mnemonicToLegacySeed } from '@polkadot/util-crypto';
 
 const { Keyring } = require('@polkadot/api');
 
@@ -14,7 +14,9 @@ export default function Main(props) {
 
     const mnemonic = mnemonicGenerate()
     const keyring2 = new Keyring({ type: 'sr25519' });
-    const alice = keyring2.addFromUri(mnemonic);
+    const pair  = keyring2.addFromUri(mnemonic);
+
+    console.log(pair)
 
     useEffect(() => {
         const addresses = keyring.getPairs().map(account => account.address);
@@ -30,11 +32,11 @@ export default function Main(props) {
                 unsubscribeAll = unsub;
             }).catch(console.error);
 
-        api.query.system.account(alice.address, aliceAcct => {
+        api.query.system.account(pair.address, aliceAcct => {
             console.log("Subscribed to Unity account.");
             const aliceFreeSub = aliceAcct.data.free;
             console.log(`Unity Account (sub): ${aliceFreeSub}`);
-            console.log(`Unity Address: ${alice.address}`);
+            console.log(`Unity Address: ${pair.address}`);
         });
 
         return () => unsubscribeAll && unsubscribeAll();
@@ -42,17 +44,9 @@ export default function Main(props) {
 
     return (
         <Grid.Column>
-            <h1>钱包地址</h1>
+            <h1>区块链钱包</h1>
             <Table celled striped size='small'>
                 <Table.Body>
-                    <Table.Row>
-                        <Table.Cell width={2} textAlign='right'>
-                            <strong>用户名</strong>
-                        </Table.Cell>
-                        <Table.Cell width={10}>
-                            <strong>{mnemonic}</strong>
-                        </Table.Cell>
-                    </Table.Row>
                     <Table.Row>
                         <Table.Cell width={2} textAlign='right'>
                             <strong>助记词</strong>
@@ -63,10 +57,26 @@ export default function Main(props) {
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell width={2} textAlign='right'>
+                            <strong>类型</strong>
+                        </Table.Cell>
+                        <Table.Cell width={10}>
+                            <strong>{pair.type}</strong>
+                        </Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell width={2} textAlign='right'>
+                            <strong>公钥</strong>
+                        </Table.Cell>
+                        <Table.Cell width={10}>
+                            <strong>{pair.publicKey}</strong>
+                        </Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell width={2} textAlign='right'>
                             <strong>地址</strong>
                         </Table.Cell>
                         <Table.Cell width={10}>
-                            <strong>{alice.address}</strong>
+                            <strong>{pair.address}</strong>
                         </Table.Cell>
                     </Table.Row>
                 </Table.Body>

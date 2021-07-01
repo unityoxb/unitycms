@@ -1,79 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Grid, Button } from 'semantic-ui-react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useSubstrate } from './substrate-lib';
+// import { Keyring } from '@polkadot/keyring';
+import keyring from '@polkadot/ui-keyring';
+import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
 
-import { hdLedger, hdValidatePath, keyExtractSuri, mnemonicGenerate, mnemonicValidate, randomAsU8a } from '@polkadot/util-crypto';
+import { Container, Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
+import { DeveloperConsole } from './substrate-lib/components';
 
-const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
-
-export default function Main(props) {
+import { stringToU8a, u8aToHex } from '@polkadot/util';
 
 
-    const mnemonic = mnemonicGenerate()
+async function main() {
 
-    const { api, keyring } = useSubstrate();
-    const [balances, setBalances] = useState({});
-    const ALICE = 'oxb';
-    const keyring2 = new Keyring({ type: 'sr25519' });
-    const alice = keyring2.addFromUri(mnemonic);
+    // await cryptoWaitReady();
 
+    // // create a keyring with some non-default values specified
+    // const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 
-    useEffect(() => {
-        const addresses = keyring.getPairs().map(account => account.address);
-        let unsubscribeAll = null;
+    // const mnemonic = mnemonicGenerate();
 
+    // // create & add the pair to the keyring with the type and some additional
+    // // metadata specified
+    // const pair = keyring.addFromUri(mnemonic, { name: 'unity' }, 'ed25519');
 
-        api.query.system.account
-            .multi(addresses, balances => {
-                const balancesMap = addresses.reduce((acc, address, index) => ({
-                    ...acc, [address]: balances[index].data.free.toHuman()
-                }), {});
-                setBalances(balancesMap);
-            }).then(unsub => {
-                unsubscribeAll = unsub;
-            }).catch(console.error);
+    // // create Alice based on the development seed
+    // const alice = keyring.addFromUri('//Alice');
 
-        api.query.system.account(alice.address, aliceAcct => {
-            console.log("Subscribed to Unity account.");
-            const aliceFreeSub = aliceAcct.data.free;
-            console.log(`Unity Account (sub): ${aliceFreeSub}`);
-            console.log(`Unity Address: ${alice.address}`);
-        });
+    // // create the message, actual signature and verify
+    // const message = stringToU8a('this is our message');
+    // const signature = alice.sign(message);
+    // const isValid = alice.verify(message, signature);
 
-        return () => unsubscribeAll && unsubscribeAll();
-    }, [api, keyring, setBalances]);
+    // console.log(keyring.pairs.length, 'pairs available');
+    // console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
 
-    return (
-        <Grid.Column>
-            <h1>Balances</h1>
-            <Table celled striped size='small'>
-                <Table.Body>
-                    <Table.Row>
-                        <Table.Cell width={3} textAlign='right'>
-                            <strong>Name</strong>
-                        </Table.Cell>
-                        <Table.Cell width={10}>
-                            <strong>{mnemonic}</strong>
-                        </Table.Cell>
-                        <Table.Cell width={3}>
-                            <strong>{alice.address}</strong>
-                        </Table.Cell>
-                    </Table.Row>
+    // // log the name & address (the latter encoded with the ss58Format)
+    // console.log(pair.meta.name, 'has address', pair.address);
 
-                    <Table.Row>
-                        <Table.Cell width={3} textAlign='right'>
-                            <strong>{ }</strong>
-                        </Table.Cell>
-                        <Table.Cell width={10}>
-                            <strong>Address</strong>
-                        </Table.Cell>
-                        <Table.Cell width={3}>
-                            <strong>Balance</strong>
-                        </Table.Cell>
-                    </Table.Row>
-                </Table.Body>
-            </Table>
-        </Grid.Column>
+    const mnemonic = mnemonicGenerate(12);
+
+    // keyring.loadAll({type: 'sr25519' });
+
+    // add the account, encrypt the stored JSON with an account-specific password
+    // const { pair, json } = keyring.addUri(mnemonic, 'myStr0ngP@ssworD', { name: 'unityoxb' });
+
+    const accounts = keyring.getAccounts();
+
+    accounts.forEach(({ address, meta, publicKey }) =>
+        console.log(address, JSON.stringify(meta), u8aToHex(publicKey))
     );
+
+
+}
+
+main().then(() => console.log('completed'))
+
+export default function About () {
+    return (
+        <main />
+    )
+    
 }

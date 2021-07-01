@@ -1,12 +1,23 @@
-import React, { useState } from 'react'
-import { Container, Grid, Form, Button, Message } from 'semantic-ui-react'
+import React, { useState, createRef } from 'react'
+import { Container, Dimmer, Loader, Grid, Form, Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil';
 import { usernameState} from '../StateManager'
 import { useHistory } from "react-router-dom";
 
+import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 
-export default function SignUp () {
+import Wallet from './Wallet';
+
+
+export function Main () {
+  const [accountAddress, setAccountAddress] = useState(null);
+  const { apiState, keyring, keyringState, apiError } = useSubstrate();
+
+  const accountPair =
+    accountAddress &&
+    keyringState === 'READY' &&
+    keyring.getPair(accountAddress);
 
   const history = useHistory();
 
@@ -16,6 +27,22 @@ export default function SignUp () {
     password: "",
     password_repeat: "",
   })
+
+  const loader = text =>
+    <Dimmer active>
+      <Loader size='small'>{text}</Loader>
+    </Dimmer>;
+
+  const message = err =>
+    <Grid centered columns={2} padded>
+      <Grid.Column>
+        <Message negative compact floating
+          header='Error Connecting to Substrate'
+          content={`${JSON.stringify(err, null, 4)}`}
+        />
+      </Grid.Column>
+    </Grid>;
+
 
   const [validate_username, setValidateUsername] = useState('')
   const [validate_email, setValidateEmail] = useState('')
@@ -148,15 +175,26 @@ export default function SignUp () {
       console.log(response.data.token_type)
       console.log(response.data.exp)
 
-      history.push('/space');
+      history.push('/sign-key');
         // console.log(response.data.refresh_token)
     }).catch(err => {
         console.log(err)
     });
   }
 
+  const contextRef = createRef();
+
+
+  if (apiState === 'ERROR') return message(apiError);
+  else if (apiState !== 'READY') return loader('正在连接赛凡链……');
+
+  if (keyringState !== 'READY') {
+    return loader('Loading accounts (please review any extension\'s authorization)');
+  }
+
   return (
-    <Container>
+    <SubstrateContextProvider>
+      <Container ref={contextRef}>
       <Grid>
         <Grid.Row>
           <Grid.Column width={5}>
@@ -226,5 +264,14 @@ export default function SignUp () {
         </Grid.Row>
       </Grid>
     </Container>
+    </SubstrateContextProvider>
   ) 
+}
+
+export default function SignUp() {
+  return (
+    <SubstrateContextProvider>
+      <Main />
+    </SubstrateContextProvider>
+  );
 }

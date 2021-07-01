@@ -10,7 +10,6 @@ import AccountSelector from '../AccountSelector';
 import Balances from '../Balances';
 
 import axios from 'axios'
-import bip39 from 'bip39'
 
 
 function Main() {
@@ -31,15 +30,6 @@ function Main() {
     const [loading, setLoading] = useState(true);
     const [stage, setStage] = useState([])
     const [error, setError] = useState('')
-
-    const mnemonic = bip39.generateMnemonic()
-
-    const newPair = keyring.addFromUri(mnemonic);
-
-    console.log(newPair)
-
-
-
 
 
     const location = useLocation();
@@ -78,7 +68,6 @@ function Main() {
         const jsonContent = JSON.stringify(allContent)
         const hash = blake2AsHex(jsonContent, 256);
         setDigest(hash);
-        alert(jsonContent)
     }
 
     useEffect(() => {
@@ -123,14 +112,6 @@ function Main() {
     //     // (when a new file is chosen), or when the storage subscription says the
     //     // value of the storage item has updated.
     // }, [digest, api.query.poe]);
-
-
-    if (apiState === 'ERROR') return message(apiError);
-    else if (apiState !== 'READY') return loader('正在连接赛凡链……');
-
-    if (keyringState !== 'READY') {
-        return loader('Loading accounts (please review any extension\'s authorization)');
-    }
 
 
     return (

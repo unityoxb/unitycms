@@ -53,7 +53,7 @@ function Main () {
   return (
     <div ref={contextRef}>
       <Sticky context={contextRef}>
-        {/* <AccountSelector setAccountAddress={setAccountAddress} /> */}
+        <AccountSelector setAccountAddress={setAccountAddress} />
       </Sticky>
       <Container>
         <Grid stackable columns='equal'>

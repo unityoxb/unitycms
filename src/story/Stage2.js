@@ -15,7 +15,6 @@ export default function Stage() {
     const [accountAddress, setAccountAddress] = useState(null);
     const { apiState, keyring, keyringState, apiError } = useSubstrate();
 
-    alert(apiState)
 
     const accountPair =
         accountAddress &&

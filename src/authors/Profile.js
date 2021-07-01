@@ -46,7 +46,6 @@ function Main() {
             <Container>
                 <Grid stackable columns='equal'>
                     <Grid.Row stretched>
-                        <Wallet />
                     </Grid.Row>
                 </Grid>
             </Container>
