@@ -16,7 +16,6 @@ const charCountState = selector({
     key: 'charCountState', // 唯一标识
     get: ({ get }) => {
         const text = get(textState);
-
         return text.length;
     },
 });

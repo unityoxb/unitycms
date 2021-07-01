@@ -13,7 +13,7 @@ function Main(){
     const [phrase, setPhrase] = useState('')
     const [pair, setPair] = useState('')
 
-    const [adderss, SetAddrerss] = useState('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY')
+    const [adderss, SetAddrerss] = useState('iiuoio')
     // const p = keyring.getPair(adderss)
 
     const [accountAddress, setAccountAddress] = useState(null);
@@ -50,22 +50,25 @@ function Main(){
             if (adderss === '') {
                
                 // Some mnemonic phrase
-                const mnemonic = mnemonicGenerate(24);
+                const mnemonic = mnemonicGenerate();
                 // Add an account, straight mnemonic
-                const { pair, json } = keyring.addUri(mnemonic, 'myStr0ngP@ssworD', { name: 'oxb-001' });
+                const pair = keyring.createFromUri(mnemonic,{ name: 'oxb-004' });
+                const acc = keyring.saveAccount(pair, 'oxbme')
 
                 console.log(pair.meta.name)
+
+                console.log(acc)
 
                 setPhrase(mnemonic)
                 setPair(pair)
             }
             else {
                 const FAUCET_ADDR = 'FvnazYM5KAetYpXoVDfqt9WFcJogKbekXVJ3Fz5oW2Dv82P';
-                const json = keyring.saveAddress(FAUCET_ADDR, { name: 'Alex faucet' });
+                const json = keyring.saveAddress(FAUCET_ADDR, { name: 'unityoxb-mmm' });
 
                 // the faucet will now be in the list of available addresses
 
-                const accs = keyring.getAddresses();
+                const accs = keyring.getAddress('5EXDea5fW6ea8r6PyxF462RALM4BsbPTwD2S3L6dDr6GRHRb');
                 console.log(accs)
             }
         }
@@ -73,7 +76,7 @@ function Main(){
         getAccount();
         
 
-    }, [keyring])
+    }, [])
 
     return (
         <Grid.Column>
