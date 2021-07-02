@@ -14,6 +14,7 @@ import Profile from "./authors/Profile";
 import Stage from "./story/Stage";
 import Finance from "./Finance";
 import Space from "./Space";
+import Demo from "./Demo";
 // import 404 from './404'
 
 
@@ -29,6 +30,7 @@ export default function Content() {
             <Route path="/galaxy" component={Galaxy} />
             <Route path="/space" component={Space} />
             <Route path="/stage/:id" component={Stage} />
+            <Route path="/demo" component={Demo} />
             <Route path="/" component={Home} />
         </Switch>
     )

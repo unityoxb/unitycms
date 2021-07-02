@@ -1,62 +1,42 @@
-import React from 'react';
-import {
-    RecoilRoot,
-    atom,
-    selector,
-    useRecoilState,
-    useRecoilValue,
-} from 'recoil';
+import React from 'react'
+import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
-const textState = atom({
-    key: 'textState', // 唯一标识
-    default: '', // 默认值
-});
-
-const charCountState = selector({
-    key: 'charCountState', // 唯一标识
-    get: ({ get }) => {
-        const text = get(textState);
-        return text.length;
-    },
-});
-
-function App() {
-    return (
-        <RecoilRoot>
-            <CharacterCounter />
-        </RecoilRoot>
-    );
-}
-
-function CharacterCounter() {
-    return (
-        <div>
-            <TextInput />
-            <CharacterCount />
-        </div>
-    );
-}
-
-function CharacterCount() {
-    const count = useRecoilValue(charCountState);
-
-    return <>输入长度: {count}</>;
-}
-
-function TextInput() {
-    const [text, setText] = useRecoilState(textState);
-
-    const onChange = (event) => {
-        setText(event.target.value);
-    };
+function ModalExampleModal() {
+    const [open, setOpen] = React.useState(false)
 
     return (
-        <div>
-            <input type="text" value={text} onChange={onChange} />
-            <br />
-            输入文本: {text}
-        </div>
-    );
+        <Modal
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+            open={open}
+            trigger={<Button>Show Modal</Button>}
+        >
+            <Modal.Header>Select a Photo</Modal.Header>
+            <Modal.Content image>
+                <Image size='medium' src='/images/avatar/large/rachel.png' wrapped />
+                <Modal.Description>
+                    <Header>Default Profile Image</Header>
+                    <p>
+                        We've found the following gravatar image associated with your e-mail
+                        address.
+                    </p>
+                    <p>Is it okay to use this photo?</p>
+                </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button color='black' onClick={() => setOpen(false)}>
+                    Nope
+                </Button>
+                <Button
+                    content="Yep, that's me"
+                    labelPosition='right'
+                    icon='checkmark'
+                    onClick={() => setOpen(false)}
+                    positive
+                />
+            </Modal.Actions>
+        </Modal>
+    )
 }
 
-export default App;
+export default ModalExampleModal

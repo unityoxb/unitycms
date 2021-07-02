@@ -1,23 +1,26 @@
-import React, { useState, createRef } from 'react'
-import { Container, Dimmer, Loader, Grid, Form, Button, Message } from 'semantic-ui-react'
+import React, { useState, useEffect, createRef } from 'react'
+import { Container, Dimmer, Loader, Grid, Form, Button, Message, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil';
 import { usernameState} from '../StateManager'
+import { mnemonicState} from '../StateManager'
+import { navState} from '../StateManager'
 import { useHistory } from "react-router-dom";
 
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 
-import Wallet from './Wallet';
+import { mnemonicGenerate } from '@polkadot/util-crypto';
 
 
 export function Main () {
-  const [accountAddress, setAccountAddress] = useState(null);
+
+  // 隐藏导航
+  const [nav, setNav] = useRecoilState(navState);
+  setNav(false)
+
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
 
-  const accountPair =
-    accountAddress &&
-    keyringState === 'READY' &&
-    keyring.getPair(accountAddress);
+  const submitRef = createRef()
 
   const history = useHistory();
 
@@ -27,21 +30,6 @@ export function Main () {
     password: "",
     password_repeat: "",
   })
-
-  const loader = text =>
-    <Dimmer active>
-      <Loader size='small'>{text}</Loader>
-    </Dimmer>;
-
-  const message = err =>
-    <Grid centered columns={2} padded>
-      <Grid.Column>
-        <Message negative compact floating
-          header='Error Connecting to Substrate'
-          content={`${JSON.stringify(err, null, 4)}`}
-        />
-      </Grid.Column>
-    </Grid>;
 
 
   const [validate_username, setValidateUsername] = useState('')
@@ -54,25 +42,25 @@ export function Main () {
   const [allow_password_repeat, setAllowPasswordRepeat] = useState(false)
   const [validated, setValidated] = useState(false)
 
-
   // 用户登录相关组件
   const [username, setUsername] = useRecoilState(usernameState);
+  // 助记词
+  const [mnemonic, setMnemonic] = useRecoilState(mnemonicState);
 
   // 本地存储
   const storage = window.localStorage;
 
-  function handleChange(evt) {
+  function handleChange(e) {
     setState({
       ...state,
-      [evt.target.name]: evt.target.value,
+      [e.target.name]: e.target.value,
     });
-    if (evt.target.name === 'password_repeat' && evt.target.value === state.password){
-      setAllowPasswordRepeat(true)
-    }
-    else{
-      setAllowPasswordRepeat(false)
-    }
     submitCheck();
+    
+    if(e.target.name === 'password_repeat' && state.password === e.target.value && allow_username && allow_email && allow_password){
+      setAllowPasswordRepeat(true)
+      setValidated(true)
+    }
   }
 
   // 验证用户名
@@ -140,10 +128,19 @@ export function Main () {
   const handleSubmit = e => {
     e.preventDefault();
 
+    // 创建pair
+    // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
+    const mnemonic = mnemonicGenerate();
+    const pair = keyring.createFromUri(mnemonic, { name: 'username' });
+    const chain_account = keyring.saveAccount(pair, state.password)
+
+    setMnemonic(mnemonic)
+
     const authorInfo = {
       username: state.username,
       email: state.email,
-      password: state.password
+      password: state.password,
+      chain_address: pair.address,
     }
 
     const storage = window.localStorage;
@@ -171,6 +168,11 @@ export function Main () {
       storage.scifanchain_username = username
       storage.scifanchain_access_token = access_token
 
+      // 创建pair
+      const mnemonic = mnemonicGenerate();
+      const pair = keyring.createFromUri(mnemonic, { name: 'username' });
+      const chain_account = keyring.saveAccount(pair, state.password)
+
       console.log(response.data.access_token)
       console.log(response.data.token_type)
       console.log(response.data.exp)
@@ -182,19 +184,9 @@ export function Main () {
     });
   }
 
-  const contextRef = createRef();
-
-
-  if (apiState === 'ERROR') return message(apiError);
-  else if (apiState !== 'READY') return loader('正在连接赛凡链……');
-
-  if (keyringState !== 'READY') {
-    return loader('Loading accounts (please review any extension\'s authorization)');
-  }
-
   return (
     <SubstrateContextProvider>
-      <Container ref={contextRef}>
+      <Container>
       <Grid>
         <Grid.Row>
           <Grid.Column width={5}>
@@ -250,13 +242,15 @@ export function Main () {
                   type='password'
                   onChange={handleChange}
                   onBlur={validPasswordRepeat}
+                  
               />
               {validate_password_repeat !== '' &&
                 <Message negative>
                   <p>{validate_password_repeat}</p>
                 </Message>
               }
-              <Button fluid className={validated ? 'positive' : 'disabled'}>提交注册</Button>
+                <Button fluid className={validated ? 'positive' : 'disabled'} ref={submitRef}>提交注册</Button>
+              
             </Form>
           </Grid.Column>
           <Grid.Column width={5}>
@@ -267,6 +261,7 @@ export function Main () {
     </SubstrateContextProvider>
   ) 
 }
+
 
 export default function SignUp() {
   return (
