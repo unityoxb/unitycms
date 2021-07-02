@@ -55,11 +55,17 @@ export function Main () {
       ...state,
       [e.target.name]: e.target.value,
     });
-    submitCheck();
-    
-    if(e.target.name === 'password_repeat' && state.password === e.target.value && allow_username && allow_email && allow_password){
-      setAllowPasswordRepeat(true)
-      setValidated(true)
+    if(e.target.name === 'password_repeat' && 
+      state.password === e.target.value && 
+      allow_username && 
+      allow_email && 
+      allow_password){
+        setAllowPasswordRepeat(true)
+        setValidated(true)
+    }
+    else{
+        setAllowPasswordRepeat(false)
+        setValidated(false)
     }
   }
 
