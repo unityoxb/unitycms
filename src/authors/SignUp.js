@@ -1,47 +1,20 @@
-import React, { useState, useEffect, createRef } from 'react'
+import React, { useState, useEffect, createRef, useRef } from 'react'
 import { Container, Dimmer, Loader, Grid, Form, Button, Message, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
+
 import { useRecoilState } from 'recoil';
 import { usernameState} from '../StateManager'
 import { mnemonicState} from '../StateManager'
-import { navState} from '../StateManager'
+
 import { useHistory } from "react-router-dom";
 
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 
-
 export function Main () {
 
-  // 隐藏导航
-  const [nav, setNav] = useRecoilState(navState);
-  setNav(false)
-
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
-
-  const submitRef = createRef()
-
-  const history = useHistory();
-
-  const [state, setState] = useState({
-    username: "",
-    email: "",
-    password: "",
-    password_repeat: "",
-  })
-
-
-  const [validate_username, setValidateUsername] = useState('')
-  const [validate_email, setValidateEmail] = useState('')
-  const [validate_password, setValidatePassword] = useState('')
-  const [validate_password_repeat, setValidatePasswordRepeat] = useState('')
-  const [allow_username, setAllowUsername] = useState(false)
-  const [allow_email, setAllowEmail] = useState(false)
-  const [allow_password, setAllowPassword] = useState(false)
-  const [allow_password_repeat, setAllowPasswordRepeat] = useState(false)
-  const [validated, setValidated] = useState(false)
-
   // 用户登录相关组件
   const [username, setUsername] = useRecoilState(usernameState);
   // 助记词
@@ -50,80 +23,104 @@ export function Main () {
   // 本地存储
   const storage = window.localStorage;
 
+  // 页面跳转
+  const history = useHistory();
+
+  const username_ref = useRef(null);
+  const email_ref = useRef(null);
+  const password_ref = useRef(null);
+  const password_repeat_ref = useRef(null);
+
+  const allow_username = useRef(false)
+  const allow_email = useRef(false)
+  const allow_password = useRef(false)
+  const allow_password_repeat = useRef(false)
+
+  const [validate_username, setValidateUsername] = useState('')
+  const [validate_email, setValidateEmail] = useState('')
+  const [validate_password, setValidatePassword] = useState('')
+  const [validate_password_repeat, setValidatePasswordRepeat] = useState('')
+
+  const [validated, setValidated] = useState(false)
+
   function handleChange(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-    if(e.target.name === 'password_repeat' && 
-      state.password === e.target.value && 
-      allow_username && 
-      allow_email && 
-      allow_password){
-        setAllowPasswordRepeat(true)
-        setValidated(true)
-    }
-    else{
-        setAllowPasswordRepeat(false)
-        setValidated(false)
-    }
+    
+    switch (e.target.name) {
+      case 'username':
+        username_ref.current = e.target.value;
+        validUsername();
+        break;
+      case 'email':
+        email_ref.current = e.target.value;
+        validEmail();
+        break;
+      case 'password':
+        password_ref.current = e.target.value;
+        validPassword();
+        break;
+      case 'password_repeat':
+        password_repeat_ref.current = e.target.value;
+        validPasswordRepeat();
+        break;
+    } 
   }
 
   // 验证用户名
-  function validUsername (e) {
-    if(!(/^[a-zA-Z][a-zA-Z0-9]{3,19}$/.test(state.username))) {
+  function validUsername () {
+    if (!(/^[a-zA-Z][a-zA-Z0-9]{3,19}$/.test(username_ref.current))) {
       setValidateUsername('用户名是由英文字母和数字组成的4-20位字符，以字母开头。')
-      setAllowUsername(false)
+      allow_username.current = false
     }
     else{
       setValidateUsername('')
-      setAllowUsername(true)
+      allow_username.current = true
     }
     submitCheck();
   }
 
   // 验证邮箱
-  function validEmail (e) {
-    if(!(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(state.email))) {
+  function validEmail () {
+    if(!(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(email_ref.current))) {
       setValidateEmail('邮箱地址格式不合规范，请检查输入是否正确。')
-      setAllowEmail(false)
+      allow_email.current = false
     }
     else{
       setValidateEmail('')
-      setAllowEmail(true)
+      allow_email.current = true
     }
     submitCheck();
   }
 
   // 验证密码
-  function validPassword (e) {
-    if(!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/.test(state.password))) {
+  function validPassword () {
+    if(!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/.test(password_ref.current))) {
       setValidatePassword('密码至少8位，至少1个大写字母，1个小写字母和1个数字。')
-      setAllowPassword(false)
+      allow_password.current = false
     }
     else{
       setValidatePassword('')
-      setAllowPassword(true)
+      allow_password.current = true
     }
     submitCheck();
   }
 
   // 验证密码重复
-  function validPasswordRepeat (e) {
-    if(state.password_repeat !== state.password) {
-      ('password_repeat')
+  function validPasswordRepeat () {
+    console.log(password_ref.current)
+    console.log(password_repeat_ref.current)
+    if(password_ref.current !== password_repeat_ref.current) {
       setValidatePasswordRepeat('两次输入的密码不一致，请重新输入。')
-      setAllowPasswordRepeat(false)
+      allow_password_repeat.current = false
     }
     else{
       setValidatePasswordRepeat('')
-      setAllowPasswordRepeat(true)
+      allow_password_repeat.current = true
     }
     submitCheck();
   }
 
   function submitCheck () {
-    if(allow_username && allow_email && allow_password && allow_password_repeat){
+    if(allow_username.current && allow_email.current && allow_password.current && allow_password_repeat.current){
       setValidated(true)
     }
     else{
@@ -139,17 +136,16 @@ export function Main () {
     const mnemonic = mnemonicGenerate();
     const pair = keyring.createFromUri(mnemonic, { name: 'username' });
     const chain_account = keyring.saveAccount(pair, state.password)
-
+    
+    // 与其它组件共享
     setMnemonic(mnemonic)
 
     const authorInfo = {
-      username: state.username,
-      email: state.email,
-      password: state.password,
+      username: username_ref.current,
+      email: email_ref.current,
+      password: password_ref.current,
       chain_address: pair.address,
     }
-
-    const storage = window.localStorage;
 
     axios({
       // Oauth2要求必须以表单形式提交
@@ -165,7 +161,7 @@ export function Main () {
       data: authorInfo
     }).then(response => {
 
-      setUsername(state.username)
+      setUsername(username_ref.current)
       
       // console.log(response)
       const access_token = response.data.access_token;
@@ -207,9 +203,8 @@ export function Main () {
               <Form.Input
                   placeholder='用户名'
                   name='username'
-                  value={state.username}
+                  value={username_ref.current}
                   onChange={handleChange}
-                  onBlur={validUsername}
               />
               {validate_username !== '' &&
                 <Message negative>
@@ -219,9 +214,8 @@ export function Main () {
               <Form.Input
                   placeholder='邮箱'
                   name='email'
-                  value={state.email}
+                  value={email_ref.current}
                   onChange={handleChange}
-                  onBlur={validEmail}
               />
               {validate_email !== '' &&
                 <Message negative>
@@ -231,10 +225,9 @@ export function Main () {
               <Form.Input
                   placeholder='密码'
                   name='password'
-                  value={state.password}
+                  value={password_ref.current}
                   type='password'
                   onChange={handleChange}
-                  onBlur={validPassword}
               />
               {validate_password !== '' &&
                 <Message negative>
@@ -244,10 +237,9 @@ export function Main () {
               <Form.Input
                   placeholder='重复密码'
                   name='password_repeat'
-                  value={state.password_repeat}
+                  value={password_repeat_ref.current}
                   type='password'
                   onChange={handleChange}
-                  onBlur={validPasswordRepeat}
                   
               />
               {validate_password_repeat !== '' &&
@@ -255,7 +247,7 @@ export function Main () {
                   <p>{validate_password_repeat}</p>
                 </Message>
               }
-                <Button fluid className={validated ? 'positive' : 'disabled'} ref={submitRef}>提交注册</Button>
+                <Button fluid className={validated ? 'positive' : 'disabled'}>提交注册</Button>
               
             </Form>
           </Grid.Column>

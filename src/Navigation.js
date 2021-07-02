@@ -3,30 +3,9 @@ import {Container, Menu, Button, Modal, Dropdown} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import {Link} from 'react-router-dom'
 import { useRecoilState } from 'recoil';
-import { usernameState, navState} from './StateManager'
+import { usernameState} from './StateManager'
 
-
-function Navigation() {
-  // 同步用户状态
-  const [nav, setNav] = useRecoilState(navState);
-
-  if(!nav) {
-    return (
-      <Container style={{paddingTop: '7em'}} />
-    )
-  }
-  else{
-    return (
-      <TopMenu />
-    )
-  }
-}
-
-
-function TopMenu  () {
-
-  // 同步用户状态
-  const [nav, setNav] = useRecoilState(navState);
+function Navigation  () {
 
   // 导航图标激活样式
   const [activeItem, setActiveItem] = useState('home')
