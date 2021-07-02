@@ -19,11 +19,6 @@ export default function Main (props) {
   const keyring2 = new Keyring({ type: 'sr25519' });
   const alice = keyring2.addFromUri(ALICE);
 
-
-  console.log("hello:" + mnemonic)
-  console.log("he:"+ alice.address)
-  
-
   useEffect(() => {
     const addresses = keyring.getPairs().map(account => account.address);
     let unsubscribeAll = null;

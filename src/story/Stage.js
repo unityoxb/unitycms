@@ -6,19 +6,15 @@ import 'semantic-ui-css/semantic.min.css';
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 import { DeveloperConsole } from '../substrate-lib/components';
 
-import AccountSelector from '../AccountSelector';
-import Balances from '../Balances';
-
 import axios from 'axios'
 
 
 function Main() {
 
     // Establish an API to talk to our Substrate node.
-    const { api } = useSubstrate();
 
-    const [accountAddress, setAccountAddress] = useState(null);
-    const { apiState, keyring, keyringState, apiError } = useSubstrate();
+    const [accountAddress ] = useState(null);
+    const {api, apiState, keyring, keyringState, apiError } = useSubstrate();
 
     // React hooks for all the state variables we track.
     // Learn more at: https://reactjs.org/docs/hooks-intro.html
@@ -90,28 +86,28 @@ function Main() {
             });
     }, [])
 
-    // // React hook to update the owner and block number information for a file.
-    // useEffect(() => {
-    //     let unsubscribe;
+    // React hook to update the owner and block number information for a file.
+    useEffect(() => {
+        let unsubscribe;
 
-    //     // Polkadot-JS API query to the `proofs` storage item in our pallet.
-    //     // This is a subscription, so it will always get the latest value,
-    //     // even if it changes.
-    //     api.query.poe
-    //         .proofs(digest, (result) => {
-    //             // Our storage item returns a tuple, which is represented as an array.
-    //             setOwner(result[0].toString());
-    //             setBlock(result[1].toNumber());
-    //         })
-    //         .then((unsub) => {
-    //             unsubscribe = unsub;
-    //         });
+        // Polkadot-JS API query to the `proofs` storage item in our pallet.
+        // This is a subscription, so it will always get the latest value,
+        // even if it changes.
+        api.query.poe
+            .proofs(digest, (result) => {
+                // Our storage item returns a tuple, which is represented as an array.
+                setOwner(result[0].toString());
+                setBlock(result[1].toNumber());
+            })
+            .then((unsub) => {
+                unsubscribe = unsub;
+            });
 
-    //     return () => unsubscribe && unsubscribe();
-    //     // This tells the React hook to update whenever the file digest changes
-    //     // (when a new file is chosen), or when the storage subscription says the
-    //     // value of the storage item has updated.
-    // }, [digest, api.query.poe]);
+        return () => unsubscribe && unsubscribe();
+        // This tells the React hook to update whenever the file digest changes
+        // (when a new file is chosen), or when the storage subscription says the
+        // value of the storage item has updated.
+    }, [digest, api.query.poe]);
 
 
     return (
@@ -119,10 +115,7 @@ function Main() {
             
             {!loading && !error &&
                 <SubstrateContextProvider>
-                    <AccountSelector setAccountAddress={setAccountAddress} />
-                    <Balances />
                     <Container>
-
                         <Header>{stage.title}</Header>
                         <div id='stageContent'>{stage.content}</div>
 

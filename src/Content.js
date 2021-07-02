@@ -10,11 +10,13 @@ import Galaxy from "./Galaxy";
 import SignIn from "./authors/SignIn";
 import SignUp from "./authors/SignUp";
 import SignKey from "./authors/SignKey";
+import Wallet from "./authors/Wallet";
 import Profile from "./authors/Profile";
 import Stage from "./story/Stage";
 import Finance from "./Finance";
 import Space from "./Space";
 import Demo from "./Demo";
+import Test from "./Test";
 // import 404 from './404'
 
 
@@ -24,6 +26,7 @@ export default function Content() {
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/sign-key" component={SignKey} />
+            <Route path="/wallet" component={Wallet} />
             <Route path="/profile" component={Profile} />
             <Route path="/finance" component={Finance} />
             <Route path="/site" component={Site} />
@@ -31,6 +34,7 @@ export default function Content() {
             <Route path="/space" component={Space} />
             <Route path="/stage/:id" component={Stage} />
             <Route path="/demo" component={Demo} />
+            <Route path="/test" component={Test} />
             <Route path="/" component={Home} />
         </Switch>
     )

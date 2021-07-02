@@ -1,9 +1,9 @@
 // Import
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-async function main () {
+async function main() {
   // Construct
-  const wsProvider = new WsProvider('wss://chain.scifanchain.com');
+  const wsProvider = new WsProvider('ws://127.0.0.1:9944');
   const api = await ApiPromise.create({ provider: wsProvider });
 
   console.log(api.genesisHash.toHex())
@@ -16,7 +16,7 @@ main().then(() => {
 
 
 
-export default function Test (){
+export default function Test() {
   return (
     <main />
   )

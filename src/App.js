@@ -4,7 +4,7 @@ import {
 
 import Navigation from './Navigation';
 import Content from './Content';
-// import Test from './Test';
+import Test from './Test';
 import Test2 from './Test2';
 // import Demo from './Demo'
 import React from 'react';

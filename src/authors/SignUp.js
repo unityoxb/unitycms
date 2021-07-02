@@ -11,10 +11,10 @@ import { useHistory } from "react-router-dom";
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 
 import { mnemonicGenerate } from '@polkadot/util-crypto';
+import keyring from '@polkadot/ui-keyring';
 
 export function Main () {
 
-  const { apiState, keyring, keyringState, apiError } = useSubstrate();
   // 用户登录相关组件
   const [username, setUsername] = useRecoilState(usernameState);
   // 助记词
@@ -26,10 +26,10 @@ export function Main () {
   // 页面跳转
   const history = useHistory();
 
-  const username_ref = useRef(null);
-  const email_ref = useRef(null);
-  const password_ref = useRef(null);
-  const password_repeat_ref = useRef(null);
+  const username_ref = useRef('');
+  const email_ref = useRef('');
+  const password_ref = useRef('');
+  const password_repeat_ref = useRef('');
 
   const allow_username = useRef(false)
   const allow_email = useRef(false)
@@ -116,8 +116,6 @@ export function Main () {
 
   // 验证密码重复
   function validPasswordRepeat () {
-    console.log(password_ref.current)
-    console.log(password_repeat_ref.current)
     if(password_ref.current !== password_repeat_ref.current) {
       setValidatePasswordRepeat('两次输入的密码不一致，请重新输入。')
       allow_password_repeat.current = false
@@ -142,18 +140,17 @@ export function Main () {
     e.preventDefault();
 
     // 创建pair
-    // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
     const mnemonic = mnemonicGenerate();
-    const pair = keyring.createFromUri(mnemonic, { name: 'username' });
+    const pair = keyring.createFromUri(mnemonic, { name: state.username });
     const chain_account = keyring.saveAccount(pair, state.password)
     
     // 与其它组件共享
     setMnemonic(mnemonic)
 
     const authorInfo = {
-      username: username_ref.current,
-      email: email_ref.current,
-      password: password_ref.current,
+      username: state.username,
+      email: state.email,
+      password: state.password,
       chain_address: pair.address,
     }
 
@@ -177,13 +174,8 @@ export function Main () {
       const access_token = response.data.access_token;
       axios.defaults.headers.common["Authorization"] = access_token;
 
-      storage.scifanchain_username = username
+      storage.scifanchain_username = state.username
       storage.scifanchain_access_token = access_token
-
-      // 创建pair
-      const mnemonic = mnemonicGenerate();
-      const pair = keyring.createFromUri(mnemonic, { name: 'username' });
-      const chain_account = keyring.saveAccount(pair, state.password)
 
       console.log(response.data.access_token)
       console.log(response.data.token_type)
@@ -213,7 +205,7 @@ export function Main () {
               <Form.Input
                   placeholder='用户名'
                   name='username'
-                  value={username_ref.current}
+                  value={state.username}
                   onChange={handleChange}
               />
               {validate_username !== '' &&
@@ -224,7 +216,7 @@ export function Main () {
               <Form.Input
                   placeholder='邮箱'
                   name='email'
-                  value={email_ref.current}
+                  value={state.email}
                   onChange={handleChange}
               />
               {validate_email !== '' &&
@@ -235,7 +227,7 @@ export function Main () {
               <Form.Input
                   placeholder='密码'
                   name='password'
-                  value={password_ref.current}
+                  value={state.password}
                   type='password'
                   onChange={handleChange}
               />
@@ -247,7 +239,7 @@ export function Main () {
               <Form.Input
                   placeholder='重复密码'
                   name='password_repeat'
-                  value={password_repeat_ref.current}
+                  value={state.password_repeat}
                   type='password'
                   onChange={handleChange}
                   
