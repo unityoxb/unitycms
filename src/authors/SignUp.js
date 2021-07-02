@@ -41,10 +41,20 @@ export function Main () {
   const [validate_password, setValidatePassword] = useState('')
   const [validate_password_repeat, setValidatePasswordRepeat] = useState('')
 
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password_repeat: "",
+  })
+
   const [validated, setValidated] = useState(false)
 
   function handleChange(e) {
-    
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
     switch (e.target.name) {
       case 'username':
         username_ref.current = e.target.value;
