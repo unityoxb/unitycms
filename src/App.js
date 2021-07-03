@@ -7,12 +7,12 @@ import Content from './Content';
 
 export default function App() {
     
-    return (
-        <RecoilRoot>
-            <Router>
-                {<Navigation />}
-                {<Content />}
-            </Router>
-        </RecoilRoot>
-    );
+  return (
+    <RecoilRoot>
+      <Router>
+        {<Navigation />}
+        {<Content />}
+      </Router>
+    </RecoilRoot>
+  );
 }

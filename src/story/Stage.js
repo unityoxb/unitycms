@@ -8,7 +8,7 @@ import { DeveloperConsole } from '../substrate-lib/components';
 
 import axios from 'axios'
 
-import Poe from '../PoE'
+import Poe from '../chain/Poe'
 
 
 function Main() {

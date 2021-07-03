@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Grid, Message } from 'semantic-ui-react';
 // Pre-built Substrate front-end utilities for connecting to a node
 // and making a transaction.
-import { useSubstrate } from './substrate-lib';
-import { TxButton } from './substrate-lib/components';
+import { useSubstrate } from '../substrate-lib';
+import { TxButton } from '../substrate-lib/components';
 // Polkadot-JS utilities for hashing data.
 import { blake2AsHex } from '@polkadot/util-crypto';
 
@@ -73,7 +73,7 @@ export function Main(props) {
         <Form.Field>
           {/* Button to create a claim. Only active if a file is selected,
           and not already claimed. Updates the `status`. */}
-          <Button color='violet' onClick={handlePoE}>生成Hash</Button>
+          <Button color='violet' onClick={handlePoE}>Hash</Button>
           <TxButton
             accountPair={accountPair}
             label={'提交存证'}

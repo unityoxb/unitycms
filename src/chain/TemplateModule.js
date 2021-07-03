@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Grid, Message } from 'semantic-ui-react';
 // Pre-built Substrate front-end utilities for connecting to a node
 // and making a transaction.
-import { useSubstrate } from './substrate-lib';
-import { TxButton } from './substrate-lib/components';
+import { useSubstrate } from '../substrate-lib';
+import { TxButton } from '../substrate-lib/components';
 // Polkadot-JS utilities for hashing data.
 import { blake2AsHex } from '@polkadot/util-crypto';
 
