@@ -1,5 +1,5 @@
 import React, { useState, createRef, useEffect } from 'react';
-import { Container, Dimmer, Loader, Grid, Sticky, Message, Header, Button } from 'semantic-ui-react';
+import { Container, Dimmer, Loader, Grid, Header, Button, Message, Divider, Icon } from 'semantic-ui-react';
 import { useLocation } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css';
 
@@ -8,140 +8,124 @@ import { DeveloperConsole } from '../substrate-lib/components';
 
 import axios from 'axios'
 
+import Poe from '../PoE'
+
 
 function Main() {
 
-    // Establish an API to talk to our Substrate node.
+  // React hooks for all the state variables we track.
+  // Learn more at: https://reactjs.org/docs/hooks-intro.html
+  const [accountAddress, setAccountAddress] = useState(null);
+  const {apiState, keyring, keyringState, apiError } = useSubstrate();
 
-    const [accountAddress ] = useState(null);
-    const {api, apiState, keyring, keyringState, apiError } = useSubstrate();
+  const [loading, setLoading] = useState(true);
+  const [stage, setStage] = useState([])
+  const [error, setError] = useState('')
 
-    // React hooks for all the state variables we track.
-    // Learn more at: https://reactjs.org/docs/hooks-intro.html
-    const [status, setStatus] = useState('');
-    const [digest, setDigest] = useState('');
-    const [owner, setOwner] = useState('');
-    const [block, setBlock] = useState(0);
+  // 接收前一页面的参数
+  const location = useLocation();
 
-    const [loading, setLoading] = useState(true);
-    const [stage, setStage] = useState([])
-    const [error, setError] = useState('')
+  // 加载数据
+  useEffect(() => {
+    let token = window.localStorage.getItem("scifanchain_access_token")
+    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    axios.get('https://api.scifanchain.com/stages/' + location.stage_id)
+      .then(function (response) {
+        // 处理成功情况
+        setLoading(false)
+        setStage(response.data)
+        setError('')
+        console.log(response);
+      })
+      .catch(function (error) {
+        // 处理错误情况
+        setLoading(false)
+        setStage({})
+        setError('很抱歉，没有获取到数据！')
+        console.log(error);
+      });
+  }, [])
 
+  useEffect(() => {
+    setAccountAddress('5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty')
+  }, [])
 
-    const location = useLocation();
+  // 获取当前账户
+  const accountPair =
+    accountAddress &&
+    keyringState === 'READY' &&
+    keyring.getPair(accountAddress);
+  
+  const loader = text =>
+    <Dimmer active>
+      <Loader size='small'>{text}</Loader>
+    </Dimmer>;
 
-    const contextRef = createRef();
+  const message = err =>
+    <Grid centered columns={2} padded>
+      <Grid.Column>
+        <Message negative compact floating
+          header='Error Connecting to Substrate'
+          content={`${JSON.stringify(err, null, 4)}`}
+        />
+      </Grid.Column>
+    </Grid>;
 
-    const accountPair =
-        accountAddress &&
-        keyringState === 'READY' &&
-        keyring.getPair(accountAddress);
+  if (apiState === 'ERROR') return message(apiError);
+  else if (apiState !== 'READY') return loader('正在连接赛凡链……');
 
-    const loader = text =>
-        <Dimmer active>
-            <Loader size='small'>{text}</Loader>
-        </Dimmer>;
+  if (keyringState !== 'READY') {
+    return loader('Loading accounts (please review any extension\'s authorization)');
+  }
 
-    const message = err =>
-        <Grid centered columns={2} padded>
-            <Grid.Column>
-                <Message negative compact floating
-                    header='Error Connecting to Substrate'
-                    content={`${JSON.stringify(err, null, 4)}`}
-                />
-            </Grid.Column>
-        </Grid>;
+  const contextRef = createRef();
 
-    // 执行PoE逻辑
-    // 对内容进行hash
-    const handlePoE = () => {
-        let stageContent = document.getElementById('stageContent').innerHTML;
-        const allContent = {
-            id: 1,
-            title: 'good',
-            content: stageContent
-        }
-        const jsonContent = JSON.stringify(allContent)
-        const hash = blake2AsHex(jsonContent, 256);
-        setDigest(hash);
-    }
-
-    useEffect(() => {
-        let token = window.localStorage.getItem("scifanchain_access_token")
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get('https://api.scifanchain.com/stages/' + location.stage_id)
-            .then(function (response) {
-                // 处理成功情况
-                setLoading(false)
-                setStage(response.data)
-                setError('')
-                console.log(response);
-            })
-            .catch(function (error) {
-                // 处理错误情况
-                setLoading(false)
-                setStage({})
-                setError('很抱歉，没有获取到数据！')
-                console.log(error);
-            });
-    }, [])
-
-    // React hook to update the owner and block number information for a file.
-    useEffect(() => {
-        let unsubscribe;
-
-        // Polkadot-JS API query to the `proofs` storage item in our pallet.
-        // This is a subscription, so it will always get the latest value,
-        // even if it changes.
-        api.query.poe
-            .proofs(digest, (result) => {
-                // Our storage item returns a tuple, which is represented as an array.
-                setOwner(result[0].toString());
-                setBlock(result[1].toNumber());
-            })
-            .then((unsub) => {
-                unsubscribe = unsub;
-            });
-
-        return () => unsubscribe && unsubscribe();
-        // This tells the React hook to update whenever the file digest changes
-        // (when a new file is chosen), or when the storage subscription says the
-        // value of the storage item has updated.
-    }, [digest, api.query.poe]);
-
-
-    return (
-        <div ref={contextRef}>
+  return (
+    <div ref={contextRef}>
+      {!loading && !error &&
+      <Container ref={contextRef}>
+        <Grid columns={2}>
+          <Grid.Column width={4}>
             
-            {!loading && !error &&
-                <SubstrateContextProvider>
-                    <Container>
-                        <Header>{stage.title}</Header>
-                        <div id='stageContent'>{stage.content}</div>
+          </Grid.Column>
+          <Grid.Column width={12}>
+            {/* 存证与撤消 */}
+            <Poe accountPair={accountPair}/>
+           
+            <Grid.Row>
+              <Button.Group basic size='small' floated='right'>
+                <Button icon='file' />
+                <Button icon='save' />
+                <Button icon='upload' />
+                <Button icon='download' />
+              </Button.Group>
+              <Header as="h1">{stage.title}</Header>
+            </Grid.Row>
 
-                        <Button color='violet' onClick={handlePoE}>存证</Button>
+            <Divider horizontal>
+              <Header as='h4'>
+                <Icon name='recycle' />
+                开放创作
+              </Header>
+            </Divider>
 
-                        <Button.Group basic size='small' floated='right'>
-                            <Button icon='file' />
-                            <Button icon='save' />
-                            <Button icon='upload' />
-                            <Button icon='download' />
-                        </Button.Group>
+            <Grid.Row>
+              <div id='stageContent' style={{ marginBottom: '2rem' }}>{stage.content}</div>
+            </Grid.Row>
 
-                    </Container>
-                </SubstrateContextProvider>
-            }
-
-            
-            <DeveloperConsole />
-        </div>
-    );
+          </Grid.Column>
+        </Grid>
+      </Container>
+      }
+      <DeveloperConsole />
+    </div>
+  );
 }
 
-export default function Finance() {
-    return (
-        <SubstrateContextProvider>
-            <Main />
-        </SubstrateContextProvider>
-    );
+export default function Stage() {
+  return (
+    <SubstrateContextProvider>
+        <Main />
+    </SubstrateContextProvider>
+  );
 }

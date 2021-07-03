@@ -4,6 +4,8 @@ import { Button, Header, Image, Modal } from 'semantic-ui-react'
 function ModalExampleModal() {
     const [open, setOpen] = React.useState(false)
 
+    console.log("hello, unity.")
+
     return (
         <Modal
             onClose={() => setOpen(false)}
