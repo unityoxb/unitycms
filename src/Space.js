@@ -2,7 +2,6 @@ import React, { useEffect, useState, createRef, createContext, useMemo  } from '
 import { Link } from 'react-router-dom'
 import { Grid, List, Header, Input, Button } from 'semantic-ui-react';
 import axios from 'axios';
-import StageForm from './story/StageForm'
 import Info from './authors/Info'
 
 import SimpleMDE from "react-simplemde-editor";

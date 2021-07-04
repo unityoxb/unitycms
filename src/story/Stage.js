@@ -6,6 +6,8 @@ import 'semantic-ui-css/semantic.min.css';
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 import { DeveloperConsole } from '../substrate-lib/components';
 
+import ReactMarkdown from 'react-markdown';
+
 import axios from 'axios'
 
 import Poe from '../chain/Poe'
@@ -110,7 +112,9 @@ function Main() {
             </Divider>
 
             <Grid.Row>
-              <div id='stageContent' style={{ marginBottom: '2rem' }}>{stage.content}</div>
+              <div id='stageContent' style={{ marginBottom: '2rem' }}>
+                <ReactMarkdown children={stage.content} />
+              </div>
             </Grid.Row>
 
           </Grid.Column>
