@@ -32,12 +32,13 @@ function StageList () {
         <List.Item key={stage.id} as={Link} to={
             {
                 pathname: '/stage/' + stage.id,
-                stage_id: stage.id
             }
         }>
             {stage.title}
         </List.Item>
     ));
+
+  // history.push({ pathname: "/stage/" + stage.id })
     
     return(
         <div>

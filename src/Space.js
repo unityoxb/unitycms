@@ -2,10 +2,12 @@ import React, { useEffect, useState, createRef, createContext, useMemo  } from '
 import { Link } from 'react-router-dom'
 import { Grid, List, Header, Input, Button } from 'semantic-ui-react';
 import axios from 'axios';
-import Info from './authors/Info'
+import Info from './author/Info'
 
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+
+import StageEditor from './widget/StageEditor';
 
 export const AuthorContext = createContext();
 
@@ -45,11 +47,8 @@ export default function Space() {
         title: stageTitle,
         content: stageContent,
     }
+
     axios({
-        // Oauth2要求必须以表单形式提交
-        // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded'
-        // },
         headers: {
             'Content-Type': 'application/json',
         },
@@ -62,7 +61,7 @@ export default function Space() {
     }).catch(err => {
         console.log(err)
     });
-}
+  }
 
   useEffect(() => {
 
@@ -93,7 +92,7 @@ export default function Space() {
     </List.Item>
   ));
 
-const contextRef = createRef();
+  const contextRef = createRef();
 
   return (
     <div ref={contextRef}>
@@ -106,13 +105,7 @@ const contextRef = createRef();
             </AuthorContext.Provider>
           </Grid.Column>
           <Grid.Column width={8}>
-            <Input fluid placeholder='一个从脑海中浮同的想法...' style={{marginBottom: '1rem'}} onBlur={onBlurTitle}/>
-            <SimpleMDE 
-              value={stageContent} 
-              onChange={onChangeContent} 
-              options={autofocusNoSpellcheckerOptions}
-            />
-            <Button onClick={handleSubmit}>提交</Button>              
+            <StageEditor stage={{}}/>
           </Grid.Column>
           <Grid.Column width={4}>
             <Header>我的作品</Header>

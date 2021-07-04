@@ -21,13 +21,14 @@ export function Main(props) {
   const [owner, setOwner] = useState('');
   const [block, setBlock] = useState(0);
 
-  // 执行PoE逻辑
-  // 对内容进行hash
+
+  // 对内容进行hash，触发poe校验
   const handlePoE = () => {
+    let stageTitle = document.getElementById('stageTitle').innerHTML;
     let stageContent = document.getElementById('stageContent').innerHTML;
     const allContent = {
-      id: 1,
-      title: 'good',
+      title: stageTitle,
+      Submitter_address: accountPair.address,
       content: stageContent
     }
     const jsonContent = JSON.stringify(allContent)
@@ -104,7 +105,6 @@ export function Main(props) {
           />
         </Form.Field>
         {/* Status message about the transaction. */}
-        <div style={{ overflowWrap: 'break-word' }}>{status}</div>
         {digest && 
           <Message>
             <p>{digest}</p>

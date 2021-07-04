@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react';
-import { Container, Dimmer, Loader, Grid, Header, Button, Message, Divider, Icon } from 'semantic-ui-react';
-import { useLocation } from 'react-router-dom'
+import { Container, Dimmer, Loader, Grid, Header, Button, Message, Divider, Icon, Segment } from 'semantic-ui-react';
+import { useLocation, useParams} from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css';
 
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
@@ -11,6 +11,10 @@ import ReactMarkdown from 'react-markdown';
 import axios from 'axios'
 
 import Poe from '../chain/Poe'
+
+import StageEditor from '../widget/StageEditor';
+
+import MenuLeft from '../Menu';
 
 
 function Main() {
@@ -23,21 +27,22 @@ function Main() {
   const [loading, setLoading] = useState(true);
   const [stage, setStage] = useState([])
   const [error, setError] = useState('')
+  const [showEditor, setShowEditor] = useState(false)
 
-  // 接收前一页面的参数
-  const location = useLocation();
+  // 接收跳转参数
+  const params = useParams();
 
   // 加载数据
   useEffect(() => {
     let token = window.localStorage.getItem("scifanchain_access_token")
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-    axios.get('https://api.scifanchain.com/stages/' + location.stage_id)
+    axios.get('https://api.scifanchain.com/stages/' + params.stage_id)
       .then(function (response) {
         // 处理成功情况
         setLoading(false)
         setStage(response.data)
         setError('')
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
         // 处理错误情况
@@ -49,7 +54,21 @@ function Main() {
   }, [])
 
   useEffect(() => {
-    setAccountAddress('5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty')
+    axios({
+      method: 'get',
+      url: 'https://api.scifanchain.com/authors/me/',
+    }).then(response => {
+      setLoading(false)
+      // setAccountAddress(response.data.chain_address)
+      // 开发环境下Alice权限
+      setAccountAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY')
+      console.log("chain_address:"+response.data.chain_address)
+      // console.log(response.data.refresh_token)
+    }).catch(err => {
+      setLoading(false)
+      setError('很抱歉，没有获取到数据！')
+      console.log(err)
+    });
   }, [])
 
   // 获取当前账户
@@ -80,6 +99,14 @@ function Main() {
     return loader('Loading accounts (please review any extension\'s authorization)');
   }
 
+  const onEdit = () => {
+    setShowEditor(true)
+  }
+
+  const onCancel = () => {
+    setShowEditor(false)
+  }
+
   const contextRef = createRef();
 
   return (
@@ -88,35 +115,46 @@ function Main() {
       <Container ref={contextRef}>
         <Grid columns={2}>
           <Grid.Column width={4}>
-            
+            <div style={{marginBottom: '9rem'}}></div>
+            <MenuLeft />
           </Grid.Column>
           <Grid.Column width={12}>
-            {/* 存证与撤消 */}
-            <Poe accountPair={accountPair}/>
-           
-            <Grid.Row>
-              <Button.Group basic size='small' floated='right'>
-                <Button icon='file' />
-                <Button icon='save' />
-                <Button icon='upload' />
-                <Button icon='download' />
-              </Button.Group>
-              <Header as="h1">{stage.title}</Header>
-            </Grid.Row>
+            {showEditor &&
+            <div>
+              <Container textAlign='right' style={{marginBottom: '1rem'}}>
+                <Button.Group basic size='small'>
+                  <Button icon='reply' onClick={onCancel}/>
+                  <Button icon='save' />
+                </Button.Group>
+              </Container>
+              <StageEditor stage={stage} style={{ clear: 'both' }}/>
+            </div>
+            }
+            {!showEditor &&
+              <div>
+                <Poe accountPair={accountPair}/>
+                <Grid.Row>
+                  <Button.Group basic size='small' floated='right'>
+                    <Button icon='edit' onClick={onEdit}/>
+                    <Button icon='share alternate' />
+                    <Button icon='download' />
+                  </Button.Group>
+                  <Header as="h1" id='stageTitle'>{stage.title}</Header>
+                </Grid.Row>
 
-            <Divider horizontal>
-              <Header as='h4'>
-                <Icon name='recycle' />
-                开放创作
-              </Header>
-            </Divider>
-
-            <Grid.Row>
-              <div id='stageContent' style={{ marginBottom: '2rem' }}>
-                <ReactMarkdown children={stage.content} />
+                <Divider horizontal>
+                  <Header as='h4'>
+                    <Icon name='recycle' />
+                    开放创作
+                  </Header>
+                </Divider>
+                <Grid.Row>
+                  <div id='stageContent' style={{ marginBottom: '2rem', textAlign: 'justify' }}>
+                    <ReactMarkdown children={stage.content} />
+                  </div>
+                </Grid.Row>
               </div>
-            </Grid.Row>
-
+            }
           </Grid.Column>
         </Grid>
       </Container>

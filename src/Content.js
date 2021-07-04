@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch} from 'react-router-dom'
+import { Switch, Route} from 'react-router-dom'
 
 import Site from './Site';
 import Home from './Home';
@@ -18,18 +18,18 @@ import Space from "./Space";
 
 export default function Content() {
     return (
-        <Switch>
-            <Route path="/sign-in" component={SignIn} />
-            <Route path="/sign-up" component={SignUp} />
-            <Route path="/sign-key" component={SignKey} />
-            <Route path="/wallet" component={Wallet} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/finance" component={Finance} />
-            <Route path="/site" component={Site} />
-            <Route path="/galaxy" component={Galaxy} />
-            <Route path="/space" component={Space} />
-            <Route path="/stage/:id" component={Stage} />
-            <Route path="/" component={Home} />
-        </Switch>
+      <Switch>
+        <Route path="/sign-in" component={SignIn} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/sign-key" component={SignKey} />
+        <Route path="/wallet" component={Wallet} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/finance" component={Finance} />
+        <Route path="/site" component={Site} />
+        <Route path="/galaxy" component={Galaxy} />
+        <Route path="/space" component={Space} />
+        <Route path="/stage/:stage_id" component={Stage} />
+        <Route path="/" exact component={Home} />
+      </Switch>
     )
 }

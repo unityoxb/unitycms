@@ -2,8 +2,7 @@ import React, { useEffect, useState, createRef, createContext  } from 'react';
 import { Link } from 'react-router-dom'
 import { Grid, List, Input, Select, options, Radio, Button, TextArea, Checkbox, Header } from 'semantic-ui-react';
 import axios from 'axios';
-import StageForm from './story/StageForm'
-import Info from './authors/Info'
+import Info from './author/Info'
 
 export const AuthorContext = createContext();
 
@@ -61,7 +60,7 @@ function Create() {
                         </AuthorContext.Provider>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                        <StageForm></StageForm>
+                       
                     </Grid.Column>
                     <Grid.Column width={4}>
                         <Header>我的作品</Header>
