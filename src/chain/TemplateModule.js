@@ -9,7 +9,7 @@ import { TxButton } from '../substrate-lib/components';
 import { blake2AsHex } from '@polkadot/util-crypto';
 
 // Our main Proof Of Existence Component which is exported.
-export function Main(props) {
+export function Main(props) {s
   // Establish an API to talk to our Substrate node.
   const { api } = useSubstrate();
   // Get the selected user from the `AccountSelector` component.

@@ -2820,6 +2820,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/codemirror@npm:0.0.109":
+  version: 0.0.109
+  resolution: "@types/codemirror@npm:0.0.109"
+  dependencies:
+    "@types/tern": "*"
+  checksum: 3726e00826eab6a16cd43ac19c3208f16ef1a5a43d2564fb09fc4501405f140bcf0ab7daa06e07c09af73bbb12b0e80a38962ed932d809b359519bbd4810afd8
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^7.2.6":
   version: 7.2.13
   resolution: "@types/eslint@npm:7.2.13"
@@ -2915,6 +2924,13 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 66e9ac0143ec521522c7bb670301e9836ee886207eeed1aab6d4854a1b19b404ab3a54cd8d449f9b1f13acc357f540be96f8ac2d1e86e301eab52ae0f9a4066f
+  languageName: node
+  linkType: hard
+
+"@types/marked@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "@types/marked@npm:2.0.3"
+  checksum: bbf1f0589871678e5e6dbb39a40d059a777968d588a59e4f87c83cd87d5b30c63a1b632201ae152565db05ca6ad565d92d3951d95740ce6aa3ca7f4d5e98dd09
   languageName: node
   linkType: hard
 
@@ -3020,6 +3036,15 @@ __metadata:
   version: 1.0.7
   resolution: "@types/tapable@npm:1.0.7"
   checksum: af30bb7429d590c7df1f3f5b8ef55fcf2c5498cd2d972c40b0ee543a2e7c3df988b5ac29e231b22b09b712ea1df3dbf3eb145dcbbd43544534cbfb0f1cebdfac
+  languageName: node
+  linkType: hard
+
+"@types/tern@npm:*":
+  version: 0.23.4
+  resolution: "@types/tern@npm:0.23.4"
+  dependencies:
+    "@types/estree": "*"
+  checksum: c2d8ed65340d63cc86ba34c7a9bcf314e44f647bc3bdaacd585ab288946531876f8feb4b900b6e8747c5265c7ee895fb2cbe883368bd5fa9508b9f41d2dd743a
   languageName: node
   linkType: hard
 
@@ -5683,6 +5708,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"codemirror-spell-checker@npm:1.1.2":
+  version: 1.1.2
+  resolution: "codemirror-spell-checker@npm:1.1.2"
+  dependencies:
+    typo-js: "*"
+  checksum: 5d4c95093cb1fc6e01a02fdb508f31692fbf3f7bec4708e2cd306d70c03ef272c15f1da272a4c9ba91a7e11728f31dcb70724865e6cec384903a056daf35aa4b
+  languageName: node
+  linkType: hard
+
+"codemirror@npm:^5.61.0":
+  version: 5.62.0
+  resolution: "codemirror@npm:5.62.0"
+  checksum: cab8037e65a35ac89edfd9e0a567079140ae07fa8d512d9ab752d7060bb573988ec32c613810e29006016fcc1d3b6acca01c3717cd293a0601e2e79f07d5b4ea
+  languageName: node
+  linkType: hard
+
 "collect-v8-coverage@npm:^1.0.0":
   version: 1.0.1
   resolution: "collect-v8-coverage@npm:1.0.1"
@@ -6923,6 +6964,19 @@ __metadata:
     readable-stream: ^2.0.0
     stream-shift: ^1.0.0
   checksum: 9581cdb8f6304fdaacb8bbe2b8b393a8da3ece3086dd24070601b70f08ca417305b4f3a94699b984c4981dceb6eebb4c132abfe0445baacfd04f2b66a0524cda
+  languageName: node
+  linkType: hard
+
+"easymde@npm:^2.15.0":
+  version: 2.15.0
+  resolution: "easymde@npm:2.15.0"
+  dependencies:
+    "@types/codemirror": 0.0.109
+    "@types/marked": ^2.0.2
+    codemirror: ^5.61.0
+    codemirror-spell-checker: 1.1.2
+    marked: ^2.0.3
+  checksum: 4bd9d628342b57900f006ed057d70dfd56eb990bb44b148d6adbfad1686f48263f6176f83f8b5ed2cb3df21f11a241a459e994532388f8ce0875349edba33d5d
   languageName: node
   linkType: hard
 
@@ -11055,6 +11109,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"marked@npm:^2.0.3":
+  version: 2.1.3
+  resolution: "marked@npm:2.1.3"
+  bin:
+    marked: bin/marked
+  checksum: 9779b758ae413186be535109fe695be4fac23a671c6565b855606bb1ea70f796b580f10a9588a130e7b676a085916ef90c82982ef6a382a06b14864cbf802afb
+  languageName: node
+  linkType: hard
+
 "md5.js@npm:^1.3.4":
   version: 1.3.5
   resolution: "md5.js@npm:1.3.5"
@@ -14139,6 +14202,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-simplemde-editor@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-simplemde-editor@npm:5.0.1"
+  dependencies:
+    "@types/codemirror": 0.0.109
+    "@types/marked": ^2.0.2
+  peerDependencies:
+    easymde: ">= 2.0.0 < 3.0.0"
+    react: ">=16.8.2"
+    react-dom: ">=16.8.2"
+  checksum: 761db27124417bc4e040ea0a0dfbedd964d495be76f44cedd8d4d4a4b47062dc400bc194c1c47698a5dc58c4d666199cd3f8c4314f43089bd2ba1021dd3399b9
+  languageName: node
+  linkType: hard
+
 "react@npm:^16.14.0":
   version: 16.14.0
   resolution: "react@npm:16.14.0"
@@ -14952,6 +15029,7 @@ resolve@^2.0.0-next.3:
     "@polkadot/util-crypto": ^6.3.1
     axios: ^0.21.1
     babel-preset-env: ^1.7.0
+    easymde: ^2.15.0
     eslint: ^7.20.0
     eslint-config-react-app: ^6.0.0
     eslint-config-semistandard: ^15.0.1
@@ -14973,6 +15051,7 @@ resolve@^2.0.0-next.3:
     react-markdown: ^6.0.2
     react-router-dom: ^5.2.0
     react-scripts: ^4.0.3
+    react-simplemde-editor: ^5.0.1
     recoil: ^0.3.1
     semantic-ui-css: ^2.4.1
     semantic-ui-react: ^2.0.3
@@ -16607,6 +16686,13 @@ resolve@^2.0.0-next.3:
   version: 1.18.0
   resolution: "typeforce@npm:1.18.0"
   checksum: f5bf1d06f97fd1b45d236cf7b694ebe3665cba01961d2665be0264a50048d93551edf44e919f8f81962f3169f8f3aedf85f7ed9ccfac8a0cf9888ba9694f6851
+  languageName: node
+  linkType: hard
+
+"typo-js@npm:*":
+  version: 1.2.0
+  resolution: "typo-js@npm:1.2.0"
+  checksum: debb5bcc3e31119a52820a7626e8a3b156bf79e754a65ee0b622a43199b5408c757cbfac0e7b4aea28a0389bcb659796e1e6b0fca8aed70a2377f16217406e00
   languageName: node
   linkType: hard
 
