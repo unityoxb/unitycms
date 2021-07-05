@@ -2,7 +2,7 @@ import React, {useEffect, useState, createRef } from 'react';
 
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
 
-import MenuLeft from './Menu';
+import MenuLeft from './widget/Menus';
 import StageList from './story/StageList';
 
 const contextRef = createRef();

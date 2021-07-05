@@ -38,7 +38,7 @@ function Navigation  () {
         active={activeItem === '银河书'}
         onClick={handleItemClick}>
       </Menu.Item>
-      <Menu.Item as={Link} to='/era'
+      <Menu.Item as={Link} to='/stars'
         name='超级星球'
         active={activeItem === '超级星球'}
         onClick={handleItemClick}>
@@ -48,19 +48,19 @@ function Navigation  () {
         active={activeItem === '流年'}
         onClick={handleItemClick}>
       </Menu.Item>
-      <Menu.Item as={Link} to='/create'
+      <Menu.Item as={Link} to='/expedition'
         name='远征计划'
         active={activeItem === '远征计划'}
         onClick={handleItemClick}>
       </Menu.Item>
-      {/* <Menu.Item as={Link} to='/community'
-        name='社区治理'
-        active={activeItem === '社区治理'}
+      <Menu.Item as={Link} to='/community'
+        name='星光社区'
+        active={activeItem === '星光社区'}
         onClick={handleItemClick}>
-      </Menu.Item> */}
+      </Menu.Item>
       <Menu.Item as={Link} to='/finance'
-        name='星块社区'
-        active={activeItem === '星块社区'}
+        name='链上财政'
+        active={activeItem === '链上财政'}
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Menu position='right'>

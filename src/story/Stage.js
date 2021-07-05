@@ -14,7 +14,7 @@ import Poe from '../chain/Poe'
 
 import StageEditor from '../widget/StageEditor';
 
-import MenuLeft from '../Menu';
+import MenuLeft from '../widget/Menus';
 
 
 function Main() {
