@@ -143,6 +143,8 @@ export function Main () {
     const mnemonic = mnemonicGenerate();
     const pair = keyring.createFromUri(mnemonic, { name: state.username });
     const chain_account = keyring.saveAccount(pair, state.password)
+
+    // console.log(chain_account)
     
     // 与其它组件共享
     setMnemonic(mnemonic)

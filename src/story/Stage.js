@@ -59,11 +59,11 @@ function Main() {
       url: 'https://api.scifanchain.com/authors/me/',
     }).then(response => {
       setLoading(false)
+      console.log(accountAddress)
       // setAccountAddress(response.data.chain_address)
       // 开发环境下Alice权限
+      console.log("chain_address:" + response.data.chain_address)
       setAccountAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY')
-      console.log("chain_address:"+response.data.chain_address)
-      // console.log(response.data.refresh_token)
     }).catch(err => {
       setLoading(false)
       setError('很抱歉，没有获取到数据！')
