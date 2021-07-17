@@ -44,23 +44,23 @@ function Navigation  () {
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Item as={Link} to='/era'
-        name='流年'
-        active={activeItem === '流年'}
+        name='时空桥'
+        active={activeItem === '时空桥'}
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Item as={Link} to='/expedition'
-        name='远征计划'
-        active={activeItem === '远征计划'}
+        name='基地'
+        active={activeItem === '基地'}
         onClick={handleItemClick}>
       </Menu.Item>
-      <Menu.Item as={Link} to='/community'
+      {/* <Menu.Item as={Link} to='/community'
         name='星光社区'
         active={activeItem === '星光社区'}
         onClick={handleItemClick}>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item as={Link} to='/finance'
-        name='链上财政'
-        active={activeItem === '链上财政'}
+        name='社区'
+        active={activeItem === '社区'}
         onClick={handleItemClick}>
       </Menu.Item>
       <Menu.Menu position='right'>
