@@ -5,6 +5,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { useRecoilState } from 'recoil';
 import { usernameState} from '../StateManager'
+import config from "../config";
 
 function SignIn () {
 
@@ -45,7 +46,7 @@ function SignIn () {
           'Content-Type': 'application/x-www-form-urlencoded'
       },
       method: 'post',
-      url: 'https://api.scifanchain.com/authors/token/',
+      url: config.URL + '/authors/token/',
       auth: {
           username: state.username,
           password: state.password

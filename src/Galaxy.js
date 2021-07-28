@@ -7,11 +7,10 @@ import TheBook from './story/TheBook';
 
 const contextRef = createRef();
 
-
 function Galaxy() {
 
    return (
-        <div ref={contextRef} style={{padding: '2rem'}}>
+    <div ref={contextRef} style={{padding: '2rem'}}>
        <Container fluid>
          <Header as='h2'>银河书：意谛的涌现</Header>
          <p>

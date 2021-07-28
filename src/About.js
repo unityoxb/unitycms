@@ -17,8 +17,6 @@ async function main() {
     accounts.forEach(({ address, meta, publicKey }) =>
         console.log(address, JSON.stringify(meta), u8aToHex(publicKey))
     );
-
-
 }
 
 main().then(() => console.log('completed'))

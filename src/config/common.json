@@ -1,5 +1,6 @@
 {
   "APP_NAME": "Scifanchain",
   "DEVELOPMENT_KEYRING": true,
-  "RPC": {}
+  "RPC": {},
+  "URL": "https://api.scifanchain.com"
 }

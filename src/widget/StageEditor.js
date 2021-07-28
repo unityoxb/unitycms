@@ -16,9 +16,8 @@ export default function StageEditor (props) {
   const [stageTitle, setStageTitle] = useState('')
   const [stageContent, setStageContent] = useState('')
 
-  const onBlurTitle = (e) => {
+  const onChangeTitle = (e) => {
     setStageTitle(e.target.value)
-    console.log(stageTitle)
   }
 
   const onChangeContent = (stageContent) => {
@@ -80,7 +79,7 @@ export default function StageEditor (props) {
     <Grid>
       <Grid.Row>
         <Grid.Column>
-          <Input fluid placeholder='一个从脑海中浮同的想法...' style={{ marginBottom: '1rem' }} onBlur={onBlurTitle} value={stageTitle} />
+          <Input fluid placeholder='一个从脑海中浮同的想法...' style={{ marginBottom: '1rem' }} onChange={onChangeTitle} value={stageTitle} />
           <SimpleMDE
             value={stageContent}
             onChange={onChangeContent}

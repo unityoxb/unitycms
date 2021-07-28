@@ -4,10 +4,10 @@ import { Grid, List, Header, Input, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import Info from './author/Info'
 
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
-
 import StageEditor from './widget/StageEditor';
+
+import { useRecoilState } from 'recoil';
+import { usernameState} from './StateManager'
 
 export const AuthorContext = createContext();
 
@@ -21,47 +21,8 @@ export default function Space() {
   const [stages, SetStages] =  useState([])
   const [error, setError] = useState('')  
 
-  const [stageTitle, setStageTitle] = useState('')
-  const [stageContent, setStageContent] = useState('')  
-
-  const onBlurTitle = (e) => {
-    setStageTitle(e.target.value)
-    console.log(stageTitle)
-  }
-
-  const onChangeContent = (stageContent) => {
-    setStageContent(stageContent);
-  };
-
-  const autofocusNoSpellcheckerOptions = useMemo(() => {
-    return {
-      autofocus: true,
-      spellChecker: false,
-    }
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const submitData = {
-        title: stageTitle,
-        content: stageContent,
-    }
-
-    axios({
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        method: 'post',
-        url: 'https://api.scifanchain.com/stages/create_stage/',
-        data: submitData
-    }).then(response => {
-        console.log(response)
-        // console.log(response.data.refresh_token)
-    }).catch(err => {
-        console.log(err)
-    });
-  }
+   // 同步用户状态
+   const [username, setUsername] = useRecoilState(usernameState)
 
   useEffect(() => {
 
@@ -78,6 +39,11 @@ export default function Space() {
         setLoading(false)
         setError('很抱歉，没有获取到数据！')
         console.log(err)
+        
+        window.localStorage.removeItem('scifanchain_username');
+        window.localStorage.removeItem('scifanchain_access_token');
+        setUsername('')
+
     });
   }, [])
 
@@ -97,7 +63,6 @@ export default function Space() {
   return (
     <div ref={contextRef}>
       <Grid>
-      
         <Grid.Row>
           <Grid.Column width={4}>
             <AuthorContext.Provider value={author}>
