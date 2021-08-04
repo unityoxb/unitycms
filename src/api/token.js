@@ -27,13 +27,19 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 调用refresh刷新令牌
-    getRefreshToken();
+    const newToken = getNewToken();
+    if (newToken){
+        storage.removeItem('scifanchain_access_token');
+        storage.scifanchain_access_token = newToken
+    }
+    
     // 对响应错误做点什么
     return Promise.reject(error);
 });
 
 
-function getRefreshToken() {
+// 获取refresh_token
+function getNewToken() {
     const refresh_token = axios({
         url: '/authors/refresh/',
         method: 'post',
@@ -41,16 +47,15 @@ function getRefreshToken() {
             'Authorization': 'Bearer ' + storage.getItem('scifanchain_refresh_token')
         },
     }).then(response => {
-        storage.removeItem('scifanchain_access_token');
-        storage.scifanchain_access_token = response.data.access_token
-        config.headers['Authorization'] = 'Bearer ' + storage.getItem('scifanchain_access_token')
         console.log(response.data)
+        return response.data.access_token
     }).catch(function (error) {
         if (error.response) {
             // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
+            // 如果refresh_token过期，跳转到登录页面
         } else if (error.request) {
             // 请求已经成功发起，但没有收到响应
             // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
@@ -61,6 +66,7 @@ function getRefreshToken() {
             console.log('Error', error.message);
         }
         console.log(error.config);
+        return null
     })
 }
 
