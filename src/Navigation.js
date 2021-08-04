@@ -52,7 +52,12 @@ function Navigation  () {
         name='基地'
         active={activeItem === '基地'}
         onClick={handleItemClick}>
-      </Menu.Item>
+        </Menu.Item>
+        <Menu.Item as={Link} to='/test'
+            name='测试'
+            active={activeItem === '测试'}
+            onClick={handleItemClick}>
+        </Menu.Item>
       {/* <Menu.Item as={Link} to='/community'
         name='星光社区'
         active={activeItem === '星光社区'}

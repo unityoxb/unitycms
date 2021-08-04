@@ -2,5 +2,5 @@
   "APP_NAME": "Scifanchain",
   "DEVELOPMENT_KEYRING": true,
   "RPC": {},
-  "URL": "https://api.scifanchain.com"
+  "API_URL": "http://127.0.0.1:7000"
 }

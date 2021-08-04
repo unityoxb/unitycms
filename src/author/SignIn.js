@@ -1,11 +1,11 @@
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 import React, { Component, useState } from 'react'
 import {Container, Grid, Form, Header, Message, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 import qs from 'qs'
-import { useRecoilState } from 'recoil';
-import { usernameState} from '../StateManager'
-import config from "../config";
+import { useRecoilState } from 'recoil'
+import { usernameState } from '../StateManager'
+import config from "../config"
 
 function SignIn () {
 
@@ -34,44 +34,37 @@ function SignIn () {
     const loginInfo = {
       username: state.username,
       password: state.password,
-      grant_type: 'password'
     }
 
     // 本地存储
     const storage = window.localStorage;
 
     axios({
-      // Oauth2要求必须以表单形式提交
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      method: 'post',
-      url: config.URL + '/authors/token/',
-      auth: {
-          username: state.username,
-          password: state.password
-      },
-      data: qs.stringify(loginInfo)
+        // Oauth2要求必须以表单形式提交
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        method: 'post',
+        url: config.API_URL + '/authors/login/',
+        data: qs.stringify(loginInfo)
     }).then(response => {
-      
-      setUsername(state.username)
 
-      // console.log(response)
-      const access_token = response.data.access_token;
-      axios.defaults.headers.common["Authorization"] = access_token;
-      
-      storage.scifanchain_username = state.username
-      storage.scifanchain_access_token = access_token
-      
-      console.log(response.data.access_token)
-      console.log(response.data.token_type)
+        setUsername(state.username)
 
-      history.push('/space');
+        const access_token = response.data.access_token;
+        const refresh_token = response.data.refresh_token;
+        axios.defaults.headers.common["Authorization"] = access_token;
+        
+        storage.scifanchain_username = state.username
+        storage.scifanchain_access_token = access_token
+        storage.scifanchain_refresh_token = refresh_token
+    
 
-      // console.log(response.data.refresh_token)
+        // history.push('/space');
+
     }).catch(err => {
-      setState({...state,dissplay_hidden:false})
-      console.log(err)
+        setState({...state,dissplay_hidden:false})
+        console.log(err)
     });
   }
 
@@ -106,7 +99,7 @@ function SignIn () {
             {!state.dissplay_hidden && 
               <Message attached='bottom' warning>
               <Icon name='help' />
-              密码似乎不正确...&nbsp;<a href='#'>找回密码</a>。&nbsp;
+              用户名或密码不正确...&nbsp;<a href='#'>找回密码</a>。&nbsp;
               </Message>
             }
           </Grid.Column>
