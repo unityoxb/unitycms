@@ -7,6 +7,8 @@ import { useRecoilState } from 'recoil'
 import { usernameState } from '../StateManager'
 import config from "../config"
 
+const storage = window.localStorage;
+
 function SignIn () {
 
     const history = useHistory(); 
@@ -28,7 +30,6 @@ function SignIn () {
     const [username, setUsername] = useRecoilState(usernameState)
     
     // 清空用户本地缓存
-    const storage = window.localStorage;
     storage.removeItem('scifanchain_username');
     storage.removeItem('scifanchain_access_token');
     storage.removeItem('scifanchain_refresh_token');
@@ -41,9 +42,6 @@ function SignIn () {
       username: state.username,
       password: state.password,
     }
-
-    // 本地存储
-    const storage = window.localStorage;
 
     axios({
         // Oauth2要求必须以表单形式提交
@@ -59,14 +57,13 @@ function SignIn () {
 
         const access_token = response.data.access_token;
         const refresh_token = response.data.refresh_token;
-        axios.defaults.headers.common["Authorization"] = access_token;
+        axios.defaults.headers.common["Authorization"] = 'Bearer' + access_token;
         
         storage.scifanchain_username = state.username
         storage.scifanchain_access_token = access_token
         storage.scifanchain_refresh_token = refresh_token
     
-
-        // history.push('/space');
+        history.push('/space');
 
     }).catch(err => {
         setState({...state,dissplay_hidden:false})
