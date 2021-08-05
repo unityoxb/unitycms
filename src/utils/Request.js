@@ -2,6 +2,7 @@ import axios from 'axios'
 
 axios.defaults.baseURL = 'http://127.0.0.1:7000';
 
+
 // 创建 axios 实例
 const instance = axios.create({
     timeout: 30000,
@@ -45,7 +46,6 @@ instance.interceptors.response.use(response => {
         const { config } = error
         if (!isRefreshing) {
             isRefreshing = true
-            alert("good")
             return refreshToken().then(res => {
                 const { access_token } = res.data
                 console.log(access_token)
@@ -58,12 +58,11 @@ instance.interceptors.response.use(response => {
                 // window.location.reload()
                 return instance(config)
             }).catch(err => {
-                console.log('抱歉，您的登录状态已失效，请重新登录！')
-                return Promise.reject(err)
+                window.location.href = "/sign-in/"
             }).finally(() => {
                 isRefreshing = false
             })
-            
+
         }
         else {
             // 返回未执行 resolve 的 Promise

@@ -10,7 +10,6 @@ import StageEditor from './widget/StageEditor';
 import { useRecoilState } from 'recoil';
 import { usernameState } from './StateManager';
 
-import ints from './api/token';
 
 // 本地存储
 const storage = window.localStorage;
@@ -30,39 +29,35 @@ export default function Space() {
     // 同步用户状态
     const [username, setUsername] = useRecoilState(usernameState)
 
-    // useEffect(() => {
-
-    //     axios({
-    //         method: 'get',
-    //         url: config.API_URL + '/authors/me/',
-    //     }).then(response => {
-    //         setLoading(false)
-    //         console.log(response.data)
-    //         SetAuthor(response.data.author)
-    //         // SetStages(response.data.stages)
-    //     }).catch(err => {
-    //         storage.removeItem('scifanchain_access_token');
-    //         axios.defaults.headers.common["Authorization"] = "Bearer " + refresh_token;
-    //         axios({
-    //             method: 'post',
-    //             url: config.API_URL + '/authors/refresh/',
-    //         }).then(res => {
-    //             console.log(res.data.access_token)
-    //             storage.scifanchain_access_token = res.data.access_token
-    //             axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.access_token;
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-
-    //         setLoading(false)
-    //         // setError('很抱歉，没有获取到数据！')
-    //         // console.log(err)
-
-    //     });
-    // }, [])
-
     useEffect(() => {
-        ints('/authors/me')
+
+        axios({
+            method: 'get',
+            url: config.API_URL + '/authors/me/',
+        }).then(response => {
+            setLoading(false)
+            console.log(response.data)
+            SetAuthor(response.data.author)
+            // SetStages(response.data.stages)
+        }).catch(err => {
+            storage.removeItem('scifanchain_access_token');
+            axios.defaults.headers.common["Authorization"] = "Bearer " + refresh_token;
+            axios({
+                method: 'post',
+                url: config.API_URL + '/authors/refresh/',
+            }).then(res => {
+                console.log(res.data.access_token)
+                storage.scifanchain_access_token = res.data.access_token
+                axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.access_token;
+            }).catch(err => {
+                console.log(err)
+            })
+
+            setLoading(false)
+            // setError('很抱歉，没有获取到数据！')
+            // console.log(err)
+
+        });
     }, [])
 
     const stageList = stages.map((stage) => (

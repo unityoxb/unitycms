@@ -9,24 +9,30 @@ import config from "../config"
 
 function SignIn () {
 
-  const history = useHistory(); 
+    const history = useHistory(); 
 
-  const [state, setState] = useState({
-    username: "",
-    password: "",
-    dissplay_hidden: true,
-  })
+    const [state, setState] = useState({
+        username: "",
+        password: "",
+        dissplay_hidden: true,
+    })
 
-  function handleChange(evt) {
-    setState({
-      ...state,
-      [evt.target.name]: evt.target.value,
-    });
-  }
+    function handleChange(evt) {
+        setState({
+        ...state,
+        [evt.target.name]: evt.target.value,
+        });
+    }
 
-  // 用户登录相关组件
-  const [username, setUsername] = useRecoilState(usernameState)
-  
+    // 用户登录相关组件
+    const [username, setUsername] = useRecoilState(usernameState)
+    
+    // 清空用户本地缓存
+    const storage = window.localStorage;
+    storage.removeItem('scifanchain_username');
+    storage.removeItem('scifanchain_access_token');
+    storage.removeItem('scifanchain_refresh_token');
+    setUsername('')
 
   const handleSubmit = (e) => {
     e.preventDefault();

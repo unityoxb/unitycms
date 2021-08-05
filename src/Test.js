@@ -2,8 +2,7 @@ import React, { useEffect, useState, createRef, createContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, List, Header } from 'semantic-ui-react';
 
-import ints from './api/token'
-import { get, post} from './api/request'
+import { get, post} from './utils/Request'
 
 
 
