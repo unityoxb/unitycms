@@ -11,6 +11,15 @@ const storage = window.localStorage;
 
 function SignIn () {
 
+    // 用户登录相关组件
+    const [username, setUsername] = useRecoilState(usernameState)
+
+    // 清空用户本地缓存
+    storage.removeItem('scifanchain_username');
+    storage.removeItem('scifanchain_access_token');
+    storage.removeItem('scifanchain_refresh_token');
+    setUsername('')
+
     const history = useHistory(); 
 
     const [state, setState] = useState({
@@ -25,15 +34,6 @@ function SignIn () {
         [evt.target.name]: evt.target.value,
         });
     }
-
-    // 用户登录相关组件
-    const [username, setUsername] = useRecoilState(usernameState)
-    
-    // 清空用户本地缓存
-    storage.removeItem('scifanchain_username');
-    storage.removeItem('scifanchain_access_token');
-    storage.removeItem('scifanchain_refresh_token');
-    setUsername('')
 
   const handleSubmit = (e) => {
     e.preventDefault();
