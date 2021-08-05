@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import { Grid, List, Header } from 'semantic-ui-react';
 
 import ints from './api/token'
+import { get, post} from './api/request'
 
 
 
 export default function Test() {
     const [token, setToken] = useState('good');
 
+
     useEffect(() => {
-        ints('/authors/me/')
+        get('/authors/me/', {'name': 'meigkdkd'}, true)
             .then(function (response) {
                 console.log(response.data);
                 console.log(response.status);
