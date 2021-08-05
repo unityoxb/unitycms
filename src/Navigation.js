@@ -20,6 +20,7 @@ function Navigation  () {
   const handleLogout = () => { 
     window.localStorage.removeItem('scifanchain_username');
     window.localStorage.removeItem('scifanchain_access_token');
+    window.localStorage.removeItem('scifanchain_refresh_token');
     setUsername('')
   }
 

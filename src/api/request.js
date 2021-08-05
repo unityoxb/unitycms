@@ -21,15 +21,13 @@ const setToken = (token) => {
 
 // 刷新 access_token 的接口
 const refreshToken = () => {
-    return instance(
-        {
-            url: '/authors/refresh/',
-            method: 'post',
-            headers: {
-                'Authorization': 'Bearer ' + storage.getItem('scifanchain_refresh_token')
-            },
-        }
-    )
+    return instance({
+        url: '/authors/refresh/',
+        method: 'post',
+        headers: {
+            'Authorization': 'Bearer ' + storage.getItem('scifanchain_refresh_token')
+        },
+    })
 }
 
 let isRefreshing = false // 标记是否正在刷新 token
@@ -47,12 +45,14 @@ instance.interceptors.response.use(response => {
         const { config } = error
         if (!isRefreshing) {
             isRefreshing = true
+            alert("good")
             return refreshToken().then(res => {
                 const { access_token } = res.data
                 console.log(access_token)
                 setToken(access_token)
-                config.headers.Authorization = access_token
+                config.headers.Authorization = `Bearer ${access_token}`
                 // token 刷新后将数组中的方法重新执行
+                console.log(requests)
                 requests.forEach((cb) => cb(access_token))
                 requests = [] // 重新请求完清空
                 // window.location.reload()
@@ -62,22 +62,23 @@ instance.interceptors.response.use(response => {
                 return Promise.reject(err)
             }).finally(() => {
                 isRefreshing = false
-                alert(isRefreshing)
             })
-        } else {
+            
+        }
+        else {
             // 返回未执行 resolve 的 Promise
             return new Promise(resolve => {
                 // 用函数形式将 resolve 存入，等待刷新后再执行
                 requests.push(token => {
-                    config.headers.Authorization = token
+                    config.headers.Authorization = `Bearer ${token}`
                     resolve(instance(config))
                 })
             })
         }
-        
     }
     return Promise.reject(error)
 })
+
 
 // 给请求头添加 access_token
 const setHeaderToken = (isNeedToken) => {

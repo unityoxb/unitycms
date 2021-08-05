@@ -8,25 +8,20 @@ import { get, post} from './api/request'
 
 
 export default function Test() {
-    const [token, setToken] = useState('good');
-
+    const [token, setToken] = useState('hello, world!');
 
     useEffect(() => {
-        get('/authors/me/', {'name': 'meigkdkd'}, true)
+        get('/authors/me/', {}, true)
             .then(function (response) {
-                console.log(response.data);
-                console.log(response.status);
-                console.log(response.statusText);
-                console.log(response.headers);
-                console.log(response.config);
+                // console.log(response.data.author);
+                // console.log(response.config);
                 setToken(response.data.author)
             });
+        
+        get('/authors/current/', {}, true);
         
     }, []); 
 
     return <h1>{token}</h1>;
-
-
-    // ints('/authors/me/')
 
 }
