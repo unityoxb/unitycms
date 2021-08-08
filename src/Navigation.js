@@ -25,7 +25,7 @@ function Navigation  () {
   }
 
   return (
-    <Menu pointing >
+      <Menu pointing inverted>
       {/* <Image src={`${process.env.PUBLIC_URL}/assets/scifanchain_logo_black_white.png`} size='mini' /> */}
       <Menu.Item header>赛凡链</Menu.Item>
       <Menu.Item as={Link} to='/'

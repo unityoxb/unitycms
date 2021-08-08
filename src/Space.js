@@ -33,11 +33,11 @@ export default function Space() {
 
         axios({
             method: 'get',
-            url: config.API_URL + '/authors/me/',
+            url: config.API_URL + '/authors/current/',
         }).then(response => {
             setLoading(false)
             console.log(response.data)
-            SetAuthor(response.data.author)
+            SetAuthor(response.data.current_user)
             // SetStages(response.data.stages)
         }).catch(err => {
             storage.removeItem('scifanchain_access_token');
@@ -77,20 +77,18 @@ export default function Space() {
         <div ref={contextRef}>
         <Grid>
             <Grid.Row>
-            <Grid.Column width={4}>
-                <AuthorContext.Provider value={author}>
-                <Info />
-                </AuthorContext.Provider>
-            </Grid.Column>
-            <Grid.Column width={8}>
-                <StageEditor stage={{}}/>
-            </Grid.Column>
-            <Grid.Column width={4}>
-                <Header>我的作品</Header>
-                {!loading && !error &&
-                <List>{stageList}</List>
-                }
-            </Grid.Column>
+                <Grid.Column width={3}>
+                    <AuthorContext.Provider value={author}>
+                    <Info />
+                    </AuthorContext.Provider>
+                    <Header>我的作品</Header>
+                    {!loading && !error &&
+                        <List>{stageList}</List>
+                    }
+                </Grid.Column>
+                <Grid.Column width={12}>
+                    <StageEditor stage={{}}/>
+                </Grid.Column>
             </Grid.Row>
         </Grid>
 

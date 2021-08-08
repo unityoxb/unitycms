@@ -12,7 +12,7 @@ function Info () {
                 <Menu.Header>我的信息</Menu.Header>
                 <Menu.Menu>
                     <Menu.Item
-                        name={author.username}
+                        name={author}
                     />
                     <Menu.Item
                         name={author.nickname}

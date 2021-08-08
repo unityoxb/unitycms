@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import config from '../config';
 
 export default function StageEditor (props) {
 
@@ -33,7 +34,7 @@ export default function StageEditor (props) {
 
   // 提交
   const [method, setMethod] = useState('post')
-  const [url, setUrl] = useState('https://api.scifanchain.com/stages/create_stage/')
+    const [url, setUrl] = useState(config.API_URL + '/stages/create_stage/')
 
   
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function StageEditor (props) {
 
     if (!stageIsEmpty) {
       setMethod('put')
-      setUrl('https://api.scifanchain.com/stages/' + stage.id)
+      setUrl(config.API_URL + '/stages/' + stage.id)
     }
 
   }, [])

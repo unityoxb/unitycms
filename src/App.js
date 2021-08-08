@@ -4,8 +4,7 @@ import { RecoilRoot} from 'recoil';
 
 import Navigation from './Navigation';
 import Content from './Content';
-
-// import Demo from './Demo'
+import Footer from './Footer'
 
 export default function App() {
     
@@ -14,7 +13,7 @@ export default function App() {
       <Router>
         {<Navigation />}
         {<Content />}
-        {/* {<Demo />} */}
+        { <Footer />}
       </Router>
     </RecoilRoot>
   );
